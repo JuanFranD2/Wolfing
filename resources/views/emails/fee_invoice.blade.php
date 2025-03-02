@@ -7,11 +7,19 @@
     <title>Fee Invoice</title>
 </head>
 
-<body>
-    <h1>Your Fee Invoice</h1>
-    <p>Dear Client,</p>
-    <p>Attached you will find your fee invoice. Please refer to the attached PDF for detailed information.</p>
-    <p>Thank you for your business.</p>
+<body
+    style="font-family: Arial, sans-serif; line-height: 1.6; background-color: #f4f4f4; padding: 20px; text-align: center;">
+    <div style="background-color: #ffffff; padding: 20px; border-radius: 5px; max-width: 600px; margin: auto;">
+        <h1 style="color: #333;">Invoice #{{ $fee->id ?? 'N/A' }}</h1>
+        <p style="font-size: 16px; color: #555;">
+            Dear {{ $fee->client->name ?? 'Customer' }},
+        </p>
+        <p style="font-size: 16px; color: #555;">
+            Please find attached your invoice for the amount of
+            <strong>${{ number_format($fee->amount ?? 0, 2) }}</strong>.
+        </p>
+        <p style="font-size: 16px; color: #555;">Thank you for your business!</p>
+    </div>
 </body>
 
 </html>

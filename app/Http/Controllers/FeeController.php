@@ -58,29 +58,25 @@ class FeeController extends Controller
         return redirect()->route('fees.index')->with('success', 'Extraordinary fee created successfully.');
     }
 
-    public function sendFeeInvoice($fee)
+    public function sendFeeInvoice(Fee $fee)
     {
-        // Obtener el cliente relacionado con la cuota
-        $client = $fee->client;
+        $client = $fee->client; // Obtener cliente de la fee
+        $pdf = Pdf::loadView('fees.invoice', compact('fee'))->setPaper('a4', 'portrait');
 
-        // Generar el PDF a partir de una vista
-        $pdf = Pdf::loadView('fees.invoice', compact('fee'));
-
-        // Definir la ruta del archivo PDF usando almacenamiento de Laravel
         $pdfPath = 'fee_invoices/invoice_' . $fee->id . '.pdf';
 
         // Guardar el PDF en el almacenamiento público
         Storage::disk('public')->put($pdfPath, $pdf->output());
 
-        // Enviar el correo con el PDF adjunto directamente
-        Mail::to($client->email)->send(new FeeInvoiceMail($pdf->output()));
+        // Ruta al archivo PDF guardado
+        $pathToFile = storage_path('app/public/' . $pdfPath);
 
-        // Eliminar el archivo PDF después de enviarlo (opcional, descomentar si quieres eliminarlo)
-        // Storage::disk('public')->delete($pdfPath);
+        // Enviar el correo con el PDF adjunto
+        Mail::to($client->email)->send(new FeeInvoiceMail($fee, $pathToFile));
 
-        // Devolver true si todo salió bien
-        return true;
+        return response()->json(['message' => 'Invoice sent successfully'], 200);
     }
+
 
 
     /**
