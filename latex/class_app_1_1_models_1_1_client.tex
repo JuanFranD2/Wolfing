@@ -1,0 +1,67 @@
+\doxysection{Client Class Reference}
+\hypertarget{class_app_1_1_models_1_1_client}{}\label{class_app_1_1_models_1_1_client}\index{Client@{Client}}
+Inheritance diagram for Client\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_app_1_1_models_1_1_client}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_app_1_1_models_1_1_client_ae8876a14058f368335baccf35af4a22b}\label{class_app_1_1_models_1_1_client_ae8876a14058f368335baccf35af4a22b} 
+{\bfseries \$table} = \textquotesingle{}clients\textquotesingle{}
+\item 
+\mbox{\hyperlink{class_app_1_1_models_1_1_client_a6a90e74ccdf5efd70d51d10c906f8e32}{\$fillable}}
+\item 
+\Hypertarget{class_app_1_1_models_1_1_client_a4a374564d2858d8ae869a8fb890aad56}\label{class_app_1_1_models_1_1_client_a4a374564d2858d8ae869a8fb890aad56} 
+{\bfseries \$hidden} = \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\hyperlink{class_app_1_1_models_1_1_client_a1649e00448c72a723c2c79fe5f915b97}{\$casts}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Client model class.
+
+This class represents a client entity and provides methods to interact with the {\ttfamily clients} table in the database. It includes fields like CIF, name, phone, email, bank account, country, currency, and monthly fee. 
+
+\doxysubsection{Field Documentation}
+\Hypertarget{class_app_1_1_models_1_1_client_a1649e00448c72a723c2c79fe5f915b97}\index{Client@{Client}!\$casts@{\$casts}}
+\index{\$casts@{\$casts}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{\$casts}{\$casts}}
+{\footnotesize\ttfamily \label{class_app_1_1_models_1_1_client_a1649e00448c72a723c2c79fe5f915b97} 
+\$casts\hspace{0.3cm}{\ttfamily [protected]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ [}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{'monthly\_fee'}\ =>\ \textcolor{stringliteral}{'decimal:2'},\ }
+\DoxyCodeLine{\ \ \ \ ]}
+
+\end{DoxyCode}
+\Hypertarget{class_app_1_1_models_1_1_client_a6a90e74ccdf5efd70d51d10c906f8e32}\index{Client@{Client}!\$fillable@{\$fillable}}
+\index{\$fillable@{\$fillable}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{\$fillable}{\$fillable}}
+{\footnotesize\ttfamily \label{class_app_1_1_models_1_1_client_a6a90e74ccdf5efd70d51d10c906f8e32} 
+\$fillable\hspace{0.3cm}{\ttfamily [protected]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ [}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{'cif'},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{'name'},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{'phone'},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{'email'},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{'bank\_account'},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{'country'},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{'currency'},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{'monthly\_fee'},}
+\DoxyCodeLine{\ \ \ \ ]}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Models/Client.\+php\end{DoxyCompactItemize}

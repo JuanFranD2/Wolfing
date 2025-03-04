@@ -1,0 +1,132 @@
+\doxysection{Province\+Controller Class Reference}
+\hypertarget{class_app_1_1_http_1_1_controllers_1_1_province_controller}{}\label{class_app_1_1_http_1_1_controllers_1_1_province_controller}\index{ProvinceController@{ProvinceController}}
+Inheritance diagram for Province\+Controller\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_app_1_1_http_1_1_controllers_1_1_province_controller}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_app_1_1_http_1_1_controllers_1_1_province_controller_a149eb92716c1084a935e04a8d95f7347}{index}} ()
+\item 
+\mbox{\hyperlink{class_app_1_1_http_1_1_controllers_1_1_province_controller_a435e7d7525d4bcd0ed5e34a469f3adf6}{create}} ()
+\item 
+\mbox{\hyperlink{class_app_1_1_http_1_1_controllers_1_1_province_controller_a9ef485163104597c12185b53cdacf638}{store}} (Request \$request)
+\item 
+\mbox{\hyperlink{class_app_1_1_http_1_1_controllers_1_1_province_controller_a09e0c2f4497fc4dd314836804a0a1172}{edit}} (\mbox{\hyperlink{class_app_1_1_models_1_1_province}{Province}} \$province)
+\item 
+\mbox{\hyperlink{class_app_1_1_http_1_1_controllers_1_1_province_controller_ab4bac9597808845cb455fba375fe8a50}{update}} (Request \$request, \mbox{\hyperlink{class_app_1_1_models_1_1_province}{Province}} \$province)
+\item 
+\mbox{\hyperlink{class_app_1_1_http_1_1_controllers_1_1_province_controller_acce9c399f3523b51e0cc5e642028c47e}{destroy}} (\mbox{\hyperlink{class_app_1_1_models_1_1_province}{Province}} \$province)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Controller for managing provinces in the application.
+
+This controller provides methods for displaying, creating, updating, and deleting provinces. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_app_1_1_http_1_1_controllers_1_1_province_controller_a435e7d7525d4bcd0ed5e34a469f3adf6}\index{ProvinceController@{ProvinceController}!create@{create}}
+\index{create@{create}!ProvinceController@{ProvinceController}}
+\doxysubsubsection{\texorpdfstring{create()}{create()}}
+{\footnotesize\ttfamily \label{class_app_1_1_http_1_1_controllers_1_1_province_controller_a435e7d7525d4bcd0ed5e34a469f3adf6} 
+create (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Show the form for creating a new province.
+
+\begin{DoxyReturn}{Returns}
+\textbackslash{}\+Illuminate\textbackslash{}\+View\textbackslash{}\+View 
+\end{DoxyReturn}
+\Hypertarget{class_app_1_1_http_1_1_controllers_1_1_province_controller_acce9c399f3523b51e0cc5e642028c47e}\index{ProvinceController@{ProvinceController}!destroy@{destroy}}
+\index{destroy@{destroy}!ProvinceController@{ProvinceController}}
+\doxysubsubsection{\texorpdfstring{destroy()}{destroy()}}
+{\footnotesize\ttfamily \label{class_app_1_1_http_1_1_controllers_1_1_province_controller_acce9c399f3523b51e0cc5e642028c47e} 
+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_app_1_1_models_1_1_province}{Province}}}]{\$province}{}\end{DoxyParamCaption})}
+
+Remove the specified province from the database.
+
+This method deletes the specified province entry from the database.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\textbackslash{}\+App\textbackslash{}\+Models\textbackslash{}\+Province & {\em \$province} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\textbackslash{}\+Illuminate\textbackslash{}\+Http\textbackslash{}\+Redirect\+Response 
+\end{DoxyReturn}
+\Hypertarget{class_app_1_1_http_1_1_controllers_1_1_province_controller_a09e0c2f4497fc4dd314836804a0a1172}\index{ProvinceController@{ProvinceController}!edit@{edit}}
+\index{edit@{edit}!ProvinceController@{ProvinceController}}
+\doxysubsubsection{\texorpdfstring{edit()}{edit()}}
+{\footnotesize\ttfamily \label{class_app_1_1_http_1_1_controllers_1_1_province_controller_a09e0c2f4497fc4dd314836804a0a1172} 
+edit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_app_1_1_models_1_1_province}{Province}}}]{\$province}{}\end{DoxyParamCaption})}
+
+Show the form for editing the specified province.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\textbackslash{}\+App\textbackslash{}\+Models\textbackslash{}\+Province & {\em \$province} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\textbackslash{}\+Illuminate\textbackslash{}\+View\textbackslash{}\+View 
+\end{DoxyReturn}
+\Hypertarget{class_app_1_1_http_1_1_controllers_1_1_province_controller_a149eb92716c1084a935e04a8d95f7347}\index{ProvinceController@{ProvinceController}!index@{index}}
+\index{index@{index}!ProvinceController@{ProvinceController}}
+\doxysubsubsection{\texorpdfstring{index()}{index()}}
+{\footnotesize\ttfamily \label{class_app_1_1_http_1_1_controllers_1_1_province_controller_a149eb92716c1084a935e04a8d95f7347} 
+index (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Display a listing of all provinces.
+
+This method retrieves all provinces from the database and displays them.
+
+\begin{DoxyReturn}{Returns}
+\textbackslash{}\+Illuminate\textbackslash{}\+View\textbackslash{}\+View 
+\end{DoxyReturn}
+\Hypertarget{class_app_1_1_http_1_1_controllers_1_1_province_controller_a9ef485163104597c12185b53cdacf638}\index{ProvinceController@{ProvinceController}!store@{store}}
+\index{store@{store}!ProvinceController@{ProvinceController}}
+\doxysubsubsection{\texorpdfstring{store()}{store()}}
+{\footnotesize\ttfamily \label{class_app_1_1_http_1_1_controllers_1_1_province_controller_a9ef485163104597c12185b53cdacf638} 
+store (\begin{DoxyParamCaption}\item[{Request}]{\$request}{}\end{DoxyParamCaption})}
+
+Store a newly created province in the database.
+
+This method validates the request data and creates a new province entry in the database.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\textbackslash{}\+Illuminate\textbackslash{}\+Http\textbackslash{}\+Request & {\em \$request} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\textbackslash{}\+Illuminate\textbackslash{}\+Http\textbackslash{}\+Redirect\+Response 
+\end{DoxyReturn}
+\Hypertarget{class_app_1_1_http_1_1_controllers_1_1_province_controller_ab4bac9597808845cb455fba375fe8a50}\index{ProvinceController@{ProvinceController}!update@{update}}
+\index{update@{update}!ProvinceController@{ProvinceController}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily \label{class_app_1_1_http_1_1_controllers_1_1_province_controller_ab4bac9597808845cb455fba375fe8a50} 
+update (\begin{DoxyParamCaption}\item[{Request}]{\$request}{, }\item[{\mbox{\hyperlink{class_app_1_1_models_1_1_province}{Province}}}]{\$province}{}\end{DoxyParamCaption})}
+
+Update the specified province in the database.
+
+This method validates the request data and updates the specified province entry.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\textbackslash{}\+Illuminate\textbackslash{}\+Http\textbackslash{}\+Request & {\em \$request} & \\
+\hline
+\textbackslash{}\+App\textbackslash{}\+Models\textbackslash{}\+Province & {\em \$province} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\textbackslash{}\+Illuminate\textbackslash{}\+Http\textbackslash{}\+Redirect\+Response 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Http/\+Controllers/Province\+Controller.\+php\end{DoxyCompactItemize}

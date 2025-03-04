@@ -1,0 +1,69 @@
+\doxysection{Modify\+Oper\+User\+Request Class Reference}
+\hypertarget{class_app_1_1_http_1_1_requests_1_1_modify_oper_user_request}{}\label{class_app_1_1_http_1_1_requests_1_1_modify_oper_user_request}\index{ModifyOperUserRequest@{ModifyOperUserRequest}}
+Inheritance diagram for Modify\+Oper\+User\+Request\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_app_1_1_http_1_1_requests_1_1_modify_oper_user_request}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_app_1_1_http_1_1_requests_1_1_modify_oper_user_request_a49fd51a5864a57e7549db5c97c1fb610}{authorize}} ()
+\item 
+\mbox{\hyperlink{class_app_1_1_http_1_1_requests_1_1_modify_oper_user_request_a17dba92d96b9dd48c62f3ede3eef94d4}{rules}} ()
+\item 
+\mbox{\hyperlink{class_app_1_1_http_1_1_requests_1_1_modify_oper_user_request_af2cb60735cac74cfa9da534eea973929}{messages}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Request class to validate the modification of an operational user.
+
+This request handles the validation logic when modifying an operational user\textquotesingle{}s information, including fields such as name, email, password, DNI, phone, address, and type. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_app_1_1_http_1_1_requests_1_1_modify_oper_user_request_a49fd51a5864a57e7549db5c97c1fb610}\index{ModifyOperUserRequest@{ModifyOperUserRequest}!authorize@{authorize}}
+\index{authorize@{authorize}!ModifyOperUserRequest@{ModifyOperUserRequest}}
+\doxysubsubsection{\texorpdfstring{authorize()}{authorize()}}
+{\footnotesize\ttfamily \label{class_app_1_1_http_1_1_requests_1_1_modify_oper_user_request_a49fd51a5864a57e7549db5c97c1fb610} 
+authorize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Determine if the user is authorized to make this request.
+
+This method checks if the user is authorized to modify the operational user\textquotesingle{}s data. You can add custom authorization logic if necessary.
+
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
+\Hypertarget{class_app_1_1_http_1_1_requests_1_1_modify_oper_user_request_af2cb60735cac74cfa9da534eea973929}\index{ModifyOperUserRequest@{ModifyOperUserRequest}!messages@{messages}}
+\index{messages@{messages}!ModifyOperUserRequest@{ModifyOperUserRequest}}
+\doxysubsubsection{\texorpdfstring{messages()}{messages()}}
+{\footnotesize\ttfamily \label{class_app_1_1_http_1_1_requests_1_1_modify_oper_user_request_af2cb60735cac74cfa9da534eea973929} 
+messages (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Get the custom error messages for the validation rules.
+
+This method returns custom error messages for each validation rule, ensuring that the user receives clear feedback when validation fails.
+
+\begin{DoxyReturn}{Returns}
+array 
+\end{DoxyReturn}
+\Hypertarget{class_app_1_1_http_1_1_requests_1_1_modify_oper_user_request_a17dba92d96b9dd48c62f3ede3eef94d4}\index{ModifyOperUserRequest@{ModifyOperUserRequest}!rules@{rules}}
+\index{rules@{rules}!ModifyOperUserRequest@{ModifyOperUserRequest}}
+\doxysubsubsection{\texorpdfstring{rules()}{rules()}}
+{\footnotesize\ttfamily \label{class_app_1_1_http_1_1_requests_1_1_modify_oper_user_request_a17dba92d96b9dd48c62f3ede3eef94d4} 
+rules (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Get the validation rules that apply to the request.
+
+This method defines the validation rules for each field when modifying the operational user, including exclusions for the current user\textquotesingle{}s email and DNI.
+
+\begin{DoxyReturn}{Returns}
+array 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Http/\+Requests/Modify\+Oper\+User\+Request.\+php\end{DoxyCompactItemize}

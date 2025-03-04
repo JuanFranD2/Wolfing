@@ -1,0 +1,69 @@
+\doxysection{Modify\+Fee\+Request Class Reference}
+\hypertarget{class_app_1_1_http_1_1_requests_1_1_modify_fee_request}{}\label{class_app_1_1_http_1_1_requests_1_1_modify_fee_request}\index{ModifyFeeRequest@{ModifyFeeRequest}}
+Inheritance diagram for Modify\+Fee\+Request\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_app_1_1_http_1_1_requests_1_1_modify_fee_request}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_app_1_1_http_1_1_requests_1_1_modify_fee_request_a49fd51a5864a57e7549db5c97c1fb610}{authorize}} ()
+\item 
+\mbox{\hyperlink{class_app_1_1_http_1_1_requests_1_1_modify_fee_request_a17dba92d96b9dd48c62f3ede3eef94d4}{rules}} ()
+\item 
+\mbox{\hyperlink{class_app_1_1_http_1_1_requests_1_1_modify_fee_request_af2cb60735cac74cfa9da534eea973929}{messages}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Request class to validate modifications to a fee.
+
+This request handles the validation logic when modifying a fee, including fields such as CIF, concept, amount, and notes. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_app_1_1_http_1_1_requests_1_1_modify_fee_request_a49fd51a5864a57e7549db5c97c1fb610}\index{ModifyFeeRequest@{ModifyFeeRequest}!authorize@{authorize}}
+\index{authorize@{authorize}!ModifyFeeRequest@{ModifyFeeRequest}}
+\doxysubsubsection{\texorpdfstring{authorize()}{authorize()}}
+{\footnotesize\ttfamily \label{class_app_1_1_http_1_1_requests_1_1_modify_fee_request_a49fd51a5864a57e7549db5c97c1fb610} 
+authorize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Determine if the user is authorized to make this request.
+
+This method assumes the user is authorized to modify the fee. It could be extended with custom authorization logic if necessary.
+
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
+\Hypertarget{class_app_1_1_http_1_1_requests_1_1_modify_fee_request_af2cb60735cac74cfa9da534eea973929}\index{ModifyFeeRequest@{ModifyFeeRequest}!messages@{messages}}
+\index{messages@{messages}!ModifyFeeRequest@{ModifyFeeRequest}}
+\doxysubsubsection{\texorpdfstring{messages()}{messages()}}
+{\footnotesize\ttfamily \label{class_app_1_1_http_1_1_requests_1_1_modify_fee_request_af2cb60735cac74cfa9da534eea973929} 
+messages (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Get custom messages for validation errors.
+
+This method returns custom error messages for each validation rule, ensuring that users receive clear feedback when validation fails.
+
+\begin{DoxyReturn}{Returns}
+array 
+\end{DoxyReturn}
+\Hypertarget{class_app_1_1_http_1_1_requests_1_1_modify_fee_request_a17dba92d96b9dd48c62f3ede3eef94d4}\index{ModifyFeeRequest@{ModifyFeeRequest}!rules@{rules}}
+\index{rules@{rules}!ModifyFeeRequest@{ModifyFeeRequest}}
+\doxysubsubsection{\texorpdfstring{rules()}{rules()}}
+{\footnotesize\ttfamily \label{class_app_1_1_http_1_1_requests_1_1_modify_fee_request_a17dba92d96b9dd48c62f3ede3eef94d4} 
+rules (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Get the validation rules that apply to the request.
+
+This method defines the validation rules for each field when modifying the fee. Fields such as CIF, concept, amount, and notes are required and validated accordingly.
+
+\begin{DoxyReturn}{Returns}
+array 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Http/\+Requests/Modify\+Fee\+Request.\+php\end{DoxyCompactItemize}

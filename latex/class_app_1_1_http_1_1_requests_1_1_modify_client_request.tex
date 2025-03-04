@@ -1,0 +1,69 @@
+\doxysection{Modify\+Client\+Request Class Reference}
+\hypertarget{class_app_1_1_http_1_1_requests_1_1_modify_client_request}{}\label{class_app_1_1_http_1_1_requests_1_1_modify_client_request}\index{ModifyClientRequest@{ModifyClientRequest}}
+Inheritance diagram for Modify\+Client\+Request\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_app_1_1_http_1_1_requests_1_1_modify_client_request}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_app_1_1_http_1_1_requests_1_1_modify_client_request_a49fd51a5864a57e7549db5c97c1fb610}{authorize}} ()
+\item 
+\mbox{\hyperlink{class_app_1_1_http_1_1_requests_1_1_modify_client_request_a17dba92d96b9dd48c62f3ede3eef94d4}{rules}} ()
+\item 
+\mbox{\hyperlink{class_app_1_1_http_1_1_requests_1_1_modify_client_request_af2cb60735cac74cfa9da534eea973929}{messages}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Request class to validate the modification of a client.
+
+This request handles the validation logic when modifying a client\textquotesingle{}s information, including fields such as CIF, name, phone, email, bank account, country, currency, and monthly fee. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_app_1_1_http_1_1_requests_1_1_modify_client_request_a49fd51a5864a57e7549db5c97c1fb610}\index{ModifyClientRequest@{ModifyClientRequest}!authorize@{authorize}}
+\index{authorize@{authorize}!ModifyClientRequest@{ModifyClientRequest}}
+\doxysubsubsection{\texorpdfstring{authorize()}{authorize()}}
+{\footnotesize\ttfamily \label{class_app_1_1_http_1_1_requests_1_1_modify_client_request_a49fd51a5864a57e7549db5c97c1fb610} 
+authorize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Determine if the user is authorized to make this request.
+
+This method assumes that the user is authorized to modify the client. It could be extended with custom authorization logic if necessary.
+
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
+\Hypertarget{class_app_1_1_http_1_1_requests_1_1_modify_client_request_af2cb60735cac74cfa9da534eea973929}\index{ModifyClientRequest@{ModifyClientRequest}!messages@{messages}}
+\index{messages@{messages}!ModifyClientRequest@{ModifyClientRequest}}
+\doxysubsubsection{\texorpdfstring{messages()}{messages()}}
+{\footnotesize\ttfamily \label{class_app_1_1_http_1_1_requests_1_1_modify_client_request_af2cb60735cac74cfa9da534eea973929} 
+messages (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Get the custom error messages for the validation rules.
+
+This method returns custom error messages for each validation rule, ensuring the user receives clear feedback when validation fails.
+
+\begin{DoxyReturn}{Returns}
+array 
+\end{DoxyReturn}
+\Hypertarget{class_app_1_1_http_1_1_requests_1_1_modify_client_request_a17dba92d96b9dd48c62f3ede3eef94d4}\index{ModifyClientRequest@{ModifyClientRequest}!rules@{rules}}
+\index{rules@{rules}!ModifyClientRequest@{ModifyClientRequest}}
+\doxysubsubsection{\texorpdfstring{rules()}{rules()}}
+{\footnotesize\ttfamily \label{class_app_1_1_http_1_1_requests_1_1_modify_client_request_a17dba92d96b9dd48c62f3ede3eef94d4} 
+rules (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Get the validation rules that apply to the request.
+
+This method defines the validation rules for each field when modifying the client, including unique constraints and data type checks.
+
+\begin{DoxyReturn}{Returns}
+array 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Http/\+Requests/Modify\+Client\+Request.\+php\end{DoxyCompactItemize}
