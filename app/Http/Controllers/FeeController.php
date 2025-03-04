@@ -7,6 +7,7 @@ use App\Http\Requests\StoreNewExtraordinaryFeeRequest;
 use App\Mail\FeeInvoiceMail;
 use App\Models\Fee;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,15 +23,21 @@ class FeeController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Obtener todas las cuotas, paginadas de 5 en 5
-        $fees = Fee::latest()->paginate(5);
+        $query = Fee::query()->with('client'); // Cargar la relación 'client'
 
-        // Retornar la vista con las cuotas
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->whereHas('client', function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%');
+            });
+        }
+
+        $fees = $query->paginate(5);
+
         return view('fees.showFees', compact('fees'));
     }
-
     /**
      * Show the form for creating a new extraordinary fee.
      *

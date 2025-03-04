@@ -12,13 +12,24 @@
                     <div class="p-6 text-gray-900 dark:text-white">
                         <div class="flex justify-between items-center mb-4">
                             <h1 class="text-xl font-semibold">Fees</h1>
-                            <!-- Botón New Extraordinary Fee -->
                             <a href="{{ route('fees.createExtraordinaryFee') }}"
                                 class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600">
                                 New Extraordinary Fee
                             </a>
                         </div>
-                        <!-- Tabla de Fees -->
+
+                        <form action="{{ route('fees.index') }}" method="GET" class="mb-4">
+                            <div class="flex items-center">
+                                <input type="text" name="search" placeholder="Search by client name..."
+                                    class="flex-1 rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+                                    value="{{ request('search') }}">
+                                <button type="submit"
+                                    class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+                                    Search
+                                </button>
+                            </div>
+                        </form>
+
                         <div class="overflow-hidden w-full">
                             <table class="table-auto w-full divide-y divide-gray-200 dark:divide-gray-700">
                                 <thead class="bg-gray-50 dark:bg-gray-900">
@@ -74,7 +85,6 @@
                                                 {{ $fee->issue_date->format('Y-m-d') }}</td>
                                             <td
                                                 class="px-4 py-2 whitespace-nowrap flex flex-wrap items-center justify-center space-y-1">
-                                                <!-- Fila superior (S y M) -->
                                                 <div class="flex space-x-1">
                                                     <a href="{{ route('fees.show', $fee->id) }}"
                                                         class="w-6 h-6 flex items-center justify-center text-xs text-white bg-orange-500 rounded-md hover:bg-orange-600">
@@ -87,7 +97,6 @@
                                                     </a>
                                                 </div>
 
-                                                <!-- Fila inferior (D y C) -->
                                                 <div class="flex space-x-1">
                                                     <button
                                                         @click="showDeleteModal = true; feeToDelete = {{ $fee->id }}"
@@ -142,12 +151,10 @@
                             </table>
                         </div>
 
-                        <!-- Paginación -->
                         <div class="mt-4">
                             {{ $fees->links() }}
                         </div>
 
-                        <!-- Mensaje si no hay cuotas -->
                         @if ($fees->isEmpty())
                             <p class="mt-4 text-white text-center">No fees found.</p>
                         @endif
@@ -156,7 +163,6 @@
             </div>
         </div>
 
-        <!-- Modal de Confirmación de Eliminación -->
         <div x-show="showDeleteModal"
             class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
             <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6 w-96">
@@ -164,7 +170,6 @@
                 <p class="mt-2 text-gray-600 dark:text-gray-300">Are you sure you want to delete this fee?</p>
 
                 <div class="mt-4 flex justify-between space-x-4">
-                    <!-- Botón Cancelar -->
                     <div class="flex-1">
                         <button @click="showDeleteModal = false"
                             class="w-full px-4 py-3 bg-gray-500 text-white rounded-md hover:bg-gray-600">
@@ -172,7 +177,6 @@
                         </button>
                     </div>
 
-                    <!-- Botón Confirmar Eliminación -->
                     <div class="flex-1">
                         <form method="POST" :action="'/fees/' + feeToDelete">
                             @csrf
