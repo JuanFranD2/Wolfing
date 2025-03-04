@@ -1,0 +1,84 @@
+\doxysection{Profile\+Controller Class Reference}
+\hypertarget{class_app_1_1_http_1_1_controllers_1_1_profile_controller}{}\label{class_app_1_1_http_1_1_controllers_1_1_profile_controller}\index{ProfileController@{ProfileController}}
+Inheritance diagram for Profile\+Controller\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_app_1_1_http_1_1_controllers_1_1_profile_controller}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_app_1_1_http_1_1_controllers_1_1_profile_controller_a51cdc624a76cd9d446b40084397ae2e8}{edit}} (Request \$request)
+\item 
+\mbox{\hyperlink{class_app_1_1_http_1_1_controllers_1_1_profile_controller_acefbab471b52b50fac2cb57f71cdfb74}{update}} (\mbox{\hyperlink{class_app_1_1_http_1_1_requests_1_1_profile_update_request}{Profile\+Update\+Request}} \$request)
+\item 
+\mbox{\hyperlink{class_app_1_1_http_1_1_controllers_1_1_profile_controller_acf421ebc9a80cdacabf896fc936a8c25}{destroy}} (Request \$request)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Controller for managing the user\textquotesingle{}s profile information.
+
+This controller provides methods to display, update, and delete the user\textquotesingle{}s profile. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_app_1_1_http_1_1_controllers_1_1_profile_controller_acf421ebc9a80cdacabf896fc936a8c25}\index{ProfileController@{ProfileController}!destroy@{destroy}}
+\index{destroy@{destroy}!ProfileController@{ProfileController}}
+\doxysubsubsection{\texorpdfstring{destroy()}{destroy()}}
+{\footnotesize\ttfamily \label{class_app_1_1_http_1_1_controllers_1_1_profile_controller_acf421ebc9a80cdacabf896fc936a8c25} 
+destroy (\begin{DoxyParamCaption}\item[{Request}]{\$request}{}\end{DoxyParamCaption})}
+
+Delete the user\textquotesingle{}s account.
+
+This method validates the request to ensure the password is correct, logs the user out, deletes the user account, invalidates the session, and redirects to the home page.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\textbackslash{}\+Illuminate\textbackslash{}\+Http\textbackslash{}\+Request & {\em \$request} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\textbackslash{}\+Illuminate\textbackslash{}\+Http\textbackslash{}\+Redirect\+Response 
+\end{DoxyReturn}
+\Hypertarget{class_app_1_1_http_1_1_controllers_1_1_profile_controller_a51cdc624a76cd9d446b40084397ae2e8}\index{ProfileController@{ProfileController}!edit@{edit}}
+\index{edit@{edit}!ProfileController@{ProfileController}}
+\doxysubsubsection{\texorpdfstring{edit()}{edit()}}
+{\footnotesize\ttfamily \label{class_app_1_1_http_1_1_controllers_1_1_profile_controller_a51cdc624a76cd9d446b40084397ae2e8} 
+edit (\begin{DoxyParamCaption}\item[{Request}]{\$request}{}\end{DoxyParamCaption})}
+
+Display the user\textquotesingle{}s profile form.
+
+This method retrieves the current authenticated user and displays their profile edit form.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\textbackslash{}\+Illuminate\textbackslash{}\+Http\textbackslash{}\+Request & {\em \$request} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\textbackslash{}\+Illuminate\textbackslash{}\+View\textbackslash{}\+View 
+\end{DoxyReturn}
+\Hypertarget{class_app_1_1_http_1_1_controllers_1_1_profile_controller_acefbab471b52b50fac2cb57f71cdfb74}\index{ProfileController@{ProfileController}!update@{update}}
+\index{update@{update}!ProfileController@{ProfileController}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily \label{class_app_1_1_http_1_1_controllers_1_1_profile_controller_acefbab471b52b50fac2cb57f71cdfb74} 
+update (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_app_1_1_http_1_1_requests_1_1_profile_update_request}{Profile\+Update\+Request}}}]{\$request}{}\end{DoxyParamCaption})}
+
+Update the user\textquotesingle{}s profile information.
+
+This method validates the profile update request, updates the user\textquotesingle{}s profile information, and checks if the email has been modified. If it has, it sets the {\ttfamily email\+\_\+verified\+\_\+at} to null.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\textbackslash{}\+App\textbackslash{}\+Http\textbackslash{}\+Requests\textbackslash{}\+Profile\+Update\+Request & {\em \$request} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\textbackslash{}\+Illuminate\textbackslash{}\+Http\textbackslash{}\+Redirect\+Response 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Http/\+Controllers/Profile\+Controller.\+php\end{DoxyCompactItemize}

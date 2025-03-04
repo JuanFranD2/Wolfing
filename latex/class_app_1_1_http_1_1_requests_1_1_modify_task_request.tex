@@ -1,0 +1,84 @@
+\doxysection{Modify\+Task\+Request Class Reference}
+\hypertarget{class_app_1_1_http_1_1_requests_1_1_modify_task_request}{}\label{class_app_1_1_http_1_1_requests_1_1_modify_task_request}\index{ModifyTaskRequest@{ModifyTaskRequest}}
+Inheritance diagram for Modify\+Task\+Request\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_app_1_1_http_1_1_requests_1_1_modify_task_request}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_app_1_1_http_1_1_requests_1_1_modify_task_request_a49fd51a5864a57e7549db5c97c1fb610}{authorize}} ()
+\item 
+\mbox{\hyperlink{class_app_1_1_http_1_1_requests_1_1_modify_task_request_a17dba92d96b9dd48c62f3ede3eef94d4}{rules}} ()
+\item 
+\mbox{\hyperlink{class_app_1_1_http_1_1_requests_1_1_modify_task_request_abf818560327272e8a0d310101d9dcb88}{attributes}} ()
+\item 
+\mbox{\hyperlink{class_app_1_1_http_1_1_requests_1_1_modify_task_request_af2cb60735cac74cfa9da534eea973929}{messages}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Request class to validate modifications to a task.
+
+This request handles the validation logic when modifying a task\textquotesingle{}s information, including fields such as client, contact person, description, status, realization date, and summary file. It also ensures that the realization date is not earlier than the task\textquotesingle{}s creation date. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_app_1_1_http_1_1_requests_1_1_modify_task_request_abf818560327272e8a0d310101d9dcb88}\index{ModifyTaskRequest@{ModifyTaskRequest}!attributes@{attributes}}
+\index{attributes@{attributes}!ModifyTaskRequest@{ModifyTaskRequest}}
+\doxysubsubsection{\texorpdfstring{attributes()}{attributes()}}
+{\footnotesize\ttfamily \label{class_app_1_1_http_1_1_requests_1_1_modify_task_request_abf818560327272e8a0d310101d9dcb88} 
+attributes (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Get the custom attributes for the validation errors.
+
+This method defines custom attribute names for the validation error messages, making them more user-\/friendly in the context of the task modification form.
+
+\begin{DoxyReturn}{Returns}
+array 
+\end{DoxyReturn}
+\Hypertarget{class_app_1_1_http_1_1_requests_1_1_modify_task_request_a49fd51a5864a57e7549db5c97c1fb610}\index{ModifyTaskRequest@{ModifyTaskRequest}!authorize@{authorize}}
+\index{authorize@{authorize}!ModifyTaskRequest@{ModifyTaskRequest}}
+\doxysubsubsection{\texorpdfstring{authorize()}{authorize()}}
+{\footnotesize\ttfamily \label{class_app_1_1_http_1_1_requests_1_1_modify_task_request_a49fd51a5864a57e7549db5c97c1fb610} 
+authorize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Determine if the user is authorized to make this request.
+
+This method checks if the user is authorized to modify the task. Custom authorization logic can be added if needed.
+
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
+\Hypertarget{class_app_1_1_http_1_1_requests_1_1_modify_task_request_af2cb60735cac74cfa9da534eea973929}\index{ModifyTaskRequest@{ModifyTaskRequest}!messages@{messages}}
+\index{messages@{messages}!ModifyTaskRequest@{ModifyTaskRequest}}
+\doxysubsubsection{\texorpdfstring{messages()}{messages()}}
+{\footnotesize\ttfamily \label{class_app_1_1_http_1_1_requests_1_1_modify_task_request_af2cb60735cac74cfa9da534eea973929} 
+messages (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Get the custom error messages for the validation rules.
+
+This method returns custom error messages for each validation rule, ensuring that users receive clear feedback when validation fails.
+
+\begin{DoxyReturn}{Returns}
+array 
+\end{DoxyReturn}
+\Hypertarget{class_app_1_1_http_1_1_requests_1_1_modify_task_request_a17dba92d96b9dd48c62f3ede3eef94d4}\index{ModifyTaskRequest@{ModifyTaskRequest}!rules@{rules}}
+\index{rules@{rules}!ModifyTaskRequest@{ModifyTaskRequest}}
+\doxysubsubsection{\texorpdfstring{rules()}{rules()}}
+{\footnotesize\ttfamily \label{class_app_1_1_http_1_1_requests_1_1_modify_task_request_a17dba92d96b9dd48c62f3ede3eef94d4} 
+rules (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Get the validation rules that apply to the request.
+
+This method defines the validation rules for each field when modifying a task, including validation for task status, dates, and file uploads. It also checks that the realization date is not earlier than the creation date.
+
+\begin{DoxyReturn}{Returns}
+array 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Http/\+Requests/Modify\+Task\+Request.\+php\end{DoxyCompactItemize}

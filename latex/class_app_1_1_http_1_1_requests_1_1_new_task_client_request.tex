@@ -1,0 +1,69 @@
+\doxysection{New\+Task\+Client\+Request Class Reference}
+\hypertarget{class_app_1_1_http_1_1_requests_1_1_new_task_client_request}{}\label{class_app_1_1_http_1_1_requests_1_1_new_task_client_request}\index{NewTaskClientRequest@{NewTaskClientRequest}}
+Inheritance diagram for New\+Task\+Client\+Request\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_app_1_1_http_1_1_requests_1_1_new_task_client_request}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_app_1_1_http_1_1_requests_1_1_new_task_client_request_a49fd51a5864a57e7549db5c97c1fb610}{authorize}} ()
+\item 
+\mbox{\hyperlink{class_app_1_1_http_1_1_requests_1_1_new_task_client_request_a17dba92d96b9dd48c62f3ede3eef94d4}{rules}} ()
+\item 
+\mbox{\hyperlink{class_app_1_1_http_1_1_requests_1_1_new_task_client_request_af2cb60735cac74cfa9da534eea973929}{messages}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Request class to validate a new task created by a client.
+
+This request handles the validation logic when a client creates a new task, including validating fields such as CIF, contact phone, description, email, and related client data. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_app_1_1_http_1_1_requests_1_1_new_task_client_request_a49fd51a5864a57e7549db5c97c1fb610}\index{NewTaskClientRequest@{NewTaskClientRequest}!authorize@{authorize}}
+\index{authorize@{authorize}!NewTaskClientRequest@{NewTaskClientRequest}}
+\doxysubsubsection{\texorpdfstring{authorize()}{authorize()}}
+{\footnotesize\ttfamily \label{class_app_1_1_http_1_1_requests_1_1_new_task_client_request_a49fd51a5864a57e7549db5c97c1fb610} 
+authorize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Determine if the user is authorized to make this request.
+
+This method allows all users to make the request. Custom authorization logic can be added if needed.
+
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
+\Hypertarget{class_app_1_1_http_1_1_requests_1_1_new_task_client_request_af2cb60735cac74cfa9da534eea973929}\index{NewTaskClientRequest@{NewTaskClientRequest}!messages@{messages}}
+\index{messages@{messages}!NewTaskClientRequest@{NewTaskClientRequest}}
+\doxysubsubsection{\texorpdfstring{messages()}{messages()}}
+{\footnotesize\ttfamily \label{class_app_1_1_http_1_1_requests_1_1_new_task_client_request_af2cb60735cac74cfa9da534eea973929} 
+messages (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Get the custom error messages for validation.
+
+This method returns custom error messages for each validation rule, ensuring that users receive clear feedback when validation fails.
+
+\begin{DoxyReturn}{Returns}
+array 
+\end{DoxyReturn}
+\Hypertarget{class_app_1_1_http_1_1_requests_1_1_new_task_client_request_a17dba92d96b9dd48c62f3ede3eef94d4}\index{NewTaskClientRequest@{NewTaskClientRequest}!rules@{rules}}
+\index{rules@{rules}!NewTaskClientRequest@{NewTaskClientRequest}}
+\doxysubsubsection{\texorpdfstring{rules()}{rules()}}
+{\footnotesize\ttfamily \label{class_app_1_1_http_1_1_requests_1_1_new_task_client_request_a17dba92d96b9dd48c62f3ede3eef94d4} 
+rules (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Get the validation rules that apply to the request.
+
+This method defines the validation rules for each field when creating a task, including the check for existing CIF, phone number matching, and valid email.
+
+\begin{DoxyReturn}{Returns}
+array 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Http/\+Requests/New\+Task\+Client\+Request.\+php\end{DoxyCompactItemize}

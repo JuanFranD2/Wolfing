@@ -1,0 +1,75 @@
+\doxysection{Fee\+Invoice\+Mail Class Reference}
+\hypertarget{class_app_1_1_mail_1_1_fee_invoice_mail}{}\label{class_app_1_1_mail_1_1_fee_invoice_mail}\index{FeeInvoiceMail@{FeeInvoiceMail}}
+Inheritance diagram for Fee\+Invoice\+Mail\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_app_1_1_mail_1_1_fee_invoice_mail}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_app_1_1_mail_1_1_fee_invoice_mail_a47dff2a8dfb481c0b0f9b836dece2150}{\+\_\+\+\_\+construct}} (\mbox{\hyperlink{class_app_1_1_models_1_1_fee}{Fee}} \$fee, \$pdf\+Path)
+\item 
+\mbox{\hyperlink{class_app_1_1_mail_1_1_fee_invoice_mail_a3928875ef0ceb18a51c1061be3eb3a00}{build}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_app_1_1_mail_1_1_fee_invoice_mail_aaae531680cac4b9220fb1a0fe8b4c698}\label{class_app_1_1_mail_1_1_fee_invoice_mail_aaae531680cac4b9220fb1a0fe8b4c698} 
+{\bfseries \$fee}
+\item 
+\Hypertarget{class_app_1_1_mail_1_1_fee_invoice_mail_aca9774415eca199da69e82a5a45dc359}\label{class_app_1_1_mail_1_1_fee_invoice_mail_aca9774415eca199da69e82a5a45dc359} 
+{\bfseries \$pdf\+Path}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Mailable class to send a fee invoice email.
+
+This class is responsible for creating the email message with the fee details and attaching the corresponding PDF invoice. It performs basic validation to ensure the fee and client email are valid. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_app_1_1_mail_1_1_fee_invoice_mail_a47dff2a8dfb481c0b0f9b836dece2150}\index{FeeInvoiceMail@{FeeInvoiceMail}!\_\_construct@{\_\_construct}}
+\index{\_\_construct@{\_\_construct}!FeeInvoiceMail@{FeeInvoiceMail}}
+\doxysubsubsection{\texorpdfstring{\_\_construct()}{\_\_construct()}}
+{\footnotesize\ttfamily \label{class_app_1_1_mail_1_1_fee_invoice_mail_a47dff2a8dfb481c0b0f9b836dece2150} 
+\+\_\+\+\_\+construct (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_app_1_1_models_1_1_fee}{Fee}}}]{\$fee}{, }\item[{}]{\$pdf\+Path}{}\end{DoxyParamCaption})}
+
+Create a new message instance.
+
+This method initializes the Fee\+Invoice\+Mail instance with a given Fee and PDF file path. It checks if the Fee object and its associated client email are valid. If not, it logs an error.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\textbackslash{}\+App\textbackslash{}\+Models\textbackslash{}\+Fee & {\em \$fee} & \\
+\hline
+string & {\em \$pdf\+Path} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em } & \\
+\hline
+\end{DoxyExceptions}
+Exception 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_app_1_1_mail_1_1_fee_invoice_mail_a3928875ef0ceb18a51c1061be3eb3a00}\index{FeeInvoiceMail@{FeeInvoiceMail}!build@{build}}
+\index{build@{build}!FeeInvoiceMail@{FeeInvoiceMail}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}}
+{\footnotesize\ttfamily \label{class_app_1_1_mail_1_1_fee_invoice_mail_a3928875ef0ceb18a51c1061be3eb3a00} 
+build (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Build the message.
+
+This method constructs the email message, sets the subject, the view to render, and attaches the generated PDF invoice to the email. The attachment is named based on the fee ID and is set to the PDF MIME type.
+
+\begin{DoxyReturn}{Returns}
+\textbackslash{}\+Illuminate\textbackslash{}\+Mail\textbackslash{}\+Mailable 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Mail/Fee\+Invoice\+Mail.\+php\end{DoxyCompactItemize}
