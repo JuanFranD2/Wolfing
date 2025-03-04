@@ -9,10 +9,20 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
+/**
+ * Controller for managing the user's profile information.
+ *
+ * This controller provides methods to display, update, and delete the user's profile.
+ */
 class ProfileController extends Controller
 {
     /**
      * Display the user's profile form.
+     *
+     * This method retrieves the current authenticated user and displays their profile edit form.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\View\View
      */
     public function edit(Request $request): View
     {
@@ -23,6 +33,12 @@ class ProfileController extends Controller
 
     /**
      * Update the user's profile information.
+     *
+     * This method validates the profile update request, updates the user's profile information,
+     * and checks if the email has been modified. If it has, it sets the `email_verified_at` to null.
+     *
+     * @param  \App\Http\Requests\ProfileUpdateRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
@@ -39,6 +55,12 @@ class ProfileController extends Controller
 
     /**
      * Delete the user's account.
+     *
+     * This method validates the request to ensure the password is correct, logs the user out,
+     * deletes the user account, invalidates the session, and redirects to the home page.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Request $request): RedirectResponse
     {

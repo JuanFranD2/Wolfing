@@ -6,10 +6,20 @@ use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Client;
 use Illuminate\Validation\Rule;
 
+/**
+ * Request class to validate a new task created by a client.
+ *
+ * This request handles the validation logic when a client creates a new task, 
+ * including validating fields such as CIF, contact phone, description, email, 
+ * and related client data.
+ */
 class NewTaskClientRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
+     *
+     * This method allows all users to make the request. 
+     * Custom authorization logic can be added if needed.
      *
      * @return bool
      */
@@ -21,6 +31,9 @@ class NewTaskClientRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
+     *
+     * This method defines the validation rules for each field when creating a task,
+     * including the check for existing CIF, phone number matching, and valid email.
      *
      * @return array
      */
@@ -56,6 +69,9 @@ class NewTaskClientRequest extends FormRequest
 
     /**
      * Get the custom error messages for validation.
+     *
+     * This method returns custom error messages for each validation rule,
+     * ensuring that users receive clear feedback when validation fails.
      *
      * @return array
      */

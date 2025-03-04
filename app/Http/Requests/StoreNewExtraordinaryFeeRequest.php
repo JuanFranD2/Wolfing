@@ -4,10 +4,19 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Request class to validate the creation of a new extraordinary fee.
+ *
+ * This request handles the validation logic for creating a new extraordinary fee,
+ * including validating fields such as CIF, concept, amount, and notes.
+ */
 class StoreNewExtraordinaryFeeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
+     *
+     * This method assumes that all users are authorized to create a new extraordinary fee.
+     * Custom authorization logic can be added if necessary.
      *
      * @return bool
      */
@@ -20,6 +29,9 @@ class StoreNewExtraordinaryFeeRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
+     *
+     * This method defines the validation rules for the required fields when creating
+     * a new extraordinary fee, including validation for CIF, concept, amount, and notes.
      *
      * @return array
      */
@@ -35,6 +47,9 @@ class StoreNewExtraordinaryFeeRequest extends FormRequest
 
     /**
      * Get custom error messages for validator errors.
+     *
+     * This method returns custom error messages for each validation rule,
+     * providing the user with clear feedback when validation fails.
      *
      * @return array
      */

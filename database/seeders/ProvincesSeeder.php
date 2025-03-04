@@ -5,15 +5,27 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Province;
 
+/**
+ * Seeder class to populate the 'provinces' table with sample data.
+ *
+ * This class is responsible for seeding the `provinces` table with data about 
+ * the provinces of Spain. It inserts a predefined list of provinces, each with 
+ * a unique `cod` (province code) and `name`. This data is inserted into the 
+ * `provinces` table using the `Province` model.
+ */
 class ProvincesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      *
+     * This method inserts predefined data for all provinces into the `provinces` table.
+     * Each province has a unique two-digit code (`cod`) and a name (`name`).
+     *
      * @return void
      */
     public function run()
     {
+        // Predefined list of provinces
         $provinces = [
             ['cod' => '01', 'name' => 'Alava'],
             ['cod' => '02', 'name' => 'Albacete'],
@@ -69,6 +81,7 @@ class ProvincesSeeder extends Seeder
             ['cod' => '52', 'name' => 'Melilla'],
         ];
 
+        // Insert each province into the 'provinces' table
         foreach ($provinces as $province) {
             Province::create($province);
         }

@@ -14,10 +14,21 @@ use App\Models\Client;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Controller for managing tasks in the application.
+ *
+ * This controller provides methods for displaying, creating, updating, completing, 
+ * and deleting tasks based on user roles (admin, oper, client).
+ */
 class TaskController extends Controller
 {
     /**
      * Display a listing of the tasks.
+     *
+     * This method retrieves tasks based on the user's role (admin, oper) 
+     * and the task status, displaying them accordingly.
+     *
+     * @param  \Illuminate\Http\Request  $request
      */
     public function index(Request $request)
     {
@@ -29,9 +40,9 @@ class TaskController extends Controller
         // Filtrar tareas según el tipo de usuario y el estado
         if ($user->type == 'admin') {
             if ($status === 'all') {
-                $tasks = Task::latest('updated_at')->paginate(5); // Obtener todas las tareas, ordenadas por 'updated_at' de más reciente a más antigua
+                $tasks = Task::latest('updated_at')->paginate(5); // Obtener todas las tareas, ordenadas por 'updated_at'
             } else {
-                $tasks = Task::where('status', $status)->latest('updated_at')->paginate(5); // Filtrar por estado y ordenar por 'updated_at'
+                $tasks = Task::where('status', $status)->latest('updated_at')->paginate(5); // Filtrar por estado y ordenar
             }
             return view('tasks.adminTasks', compact('tasks'));
         } elseif ($user->type == 'oper') {
@@ -47,6 +58,14 @@ class TaskController extends Controller
         }
     }
 
+    /**
+     * Display the specified task.
+     *
+     * This method retrieves a specific task by ID along with its associated province and operator.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
     public function show($id)
     {
         // Usamos with() para cargar la relación 'province' y obtener la provincia completa
@@ -56,8 +75,14 @@ class TaskController extends Controller
         return view('tasks.showTaskByID', compact('task'));
     }
 
-
-
+    /**
+     * Delete the specified task.
+     *
+     * This method deletes a task by its ID and redirects back with a success message.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy($id)
     {
         $task = Task::findOrFail($id);
@@ -68,6 +93,11 @@ class TaskController extends Controller
 
     /**
      * Show the form to complete a task.
+     *
+     * This method loads the task completion form and the related provinces for the task.
+     *
+     * @param  \App\Models\Task  $task
+     * @return \Illuminate\View\View
      */
     public function showCompleteTask(Task $task)
     {
@@ -78,6 +108,15 @@ class TaskController extends Controller
         return view('tasks.completeTaskOper', compact('task', 'provinces'));
     }
 
+    /**
+     * Complete a task.
+     *
+     * This method updates the task status, uploads the summary file, and saves the changes.
+     *
+     * @param  \App\Http\Requests\CompleteTaskRequest  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function completeTask(CompleteTaskRequest $request, $id)
     {
         // Buscar la tarea por su ID
@@ -86,7 +125,6 @@ class TaskController extends Controller
         // Validar y manejar el archivo de resumen si se ha subido
         $summaryFilePath = null;
         if ($request->hasFile('summary_file')) {
-            // Generar una ruta única para el archivo
             $fileName = 'summary_' . $task->id . '.' . $request->file('summary_file')->getClientOriginalExtension();
             $summaryFilePath = $request->file('summary_file')->storeAs('tasks/' . $task->id, $fileName, 'public');
         }
@@ -115,66 +153,79 @@ class TaskController extends Controller
         return redirect()->route('tasks.index')->with('success', 'Task completed successfully.');
     }
 
-
+    /**
+     * Show the form for creating a new task.
+     *
+     * This method shows the task creation form based on the user's role (admin, client).
+     *
+     */
     public function formCreate()
     {
-        // Obtener todas las provincias
         $provinces = Province::all();
         $operators = User::where('type', 'oper')->get(['id', 'name']);
 
-        // Verificar el tipo de usuario y cargar la vista correspondiente
         if (Auth::user()->type === 'admin') {
             return view('tasks.newTaskAdmin', compact('provinces', 'operators'));
         } elseif (Auth::user()->type === 'client') {
             return view('tasks.newTaskClient', compact('provinces', 'operators'));
         }
 
-        // Si el usuario no es admin ni client, se redirige a alguna otra vista o se lanza un error
         return redirect()->route('tasks.index')->with('error', 'Unauthorized access');
     }
 
+    /**
+     * Show the form for editing an existing task.
+     *
+     * This method retrieves the task and necessary data for editing.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
     public function formEdit($id)
     {
-        // Obtener la tarea por su ID
         $task = Task::findOrFail($id);
-
-        // Obtener todas las provincias
         $provinces = Province::all();
-
-        // Obtener los operadores de tipo 'oper'
         $operators = User::where('type', 'oper')->get(['id', 'name']);
 
-        // Retornar la vista con los datos necesarios
         return view('tasks.modifyTaskAdmin', compact('task', 'provinces', 'operators'));
     }
 
-
+    /**
+     * Store a newly created task in storage.
+     *
+     * This method stores a new task in the database using validated data from the request.
+     *
+     * @param  \App\Http\Requests\StoreTaskRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(StoreTaskRequest $request)
     {
-        // Crear una nueva tarea con los datos validados
         Task::create($request->validated());
 
-        // Redirigir a la lista de tareas con un mensaje de éxito
         return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
     }
 
+    /**
+     * Update the specified task in storage.
+     *
+     * This method updates the task with the given ID using validated data and file handling.
+     *
+     * @param  \App\Http\Requests\ModifyTaskRequest  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(ModifyTaskRequest $request, $id)
     {
-        // Obtener la tarea que vamos a actualizar
         $task = Task::findOrFail($id);
 
-        // Validar y manejar el archivo de resumen si se ha subido
         $summaryFilePath = null;
         if ($request->hasFile('summary_file')) {
-            // Generar una ruta única para el archivo
             $fileName = 'summary_' . $task->id . '.' . $request->file('summary_file')->getClientOriginalExtension();
             $summaryFilePath = $request->file('summary_file')->storeAs('tasks/' . $task->id, $fileName, 'public');
         } else {
-            // Si no hay un archivo nuevo, mantener el archivo actual
             $summaryFilePath = $task->summary_file;
         }
 
-        // Actualizar la tarea con los datos del formulario
         $task->update([
             'client' => $request->client,
             'contact_person' => $request->contact_person,
@@ -190,34 +241,27 @@ class TaskController extends Controller
             'realization_date' => Carbon::now()->format('Y-m-d H:i:s'),
             'previous_notes' => $request->previous_notes,
             'subsequent_notes' => $request->subsequent_notes,
-            'summary_file' => $summaryFilePath, // Guardamos la ruta del archivo
+            'summary_file' => $summaryFilePath,
         ]);
 
-        // Redirigir a la vista de tareas con un mensaje de éxito
         return redirect()->route('tasks.index')->with('success', 'Task updated successfully.');
     }
 
-    public function createTaskClient()
-    {
-        // Obtener las provincias disponibles para el formulario
-        $provinces = Province::all();
-        return view('tasks.newTaskClient', compact('provinces'));
-    }
-
     /**
-     * Store a newly created task in storage for the client.
+     * Store a newly created task for the client.
+     *
+     * This method stores a task created by a client with validated data.
+     *
+     * @param  \App\Http\Requests\NewTaskClientRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function storeClientTask(NewTaskClientRequest $request)
     {
-        // Los datos ya han sido validados gracias al NewTaskClientRequest
         $validated = $request->validated();
-
-        // Obtener el cliente por CIF
         $client = Client::where('cif', $request->input('cif'))->first();
 
-        // Crear la tarea con los datos validados
         Task::create([
-            'client' => $client->name,  // Usar el nombre del cliente en lugar del CIF
+            'client' => $client->name,
             'contact_person' => $validated['contact_person'],
             'contact_phone' => $validated['contact_phone'],
             'description' => $validated['description'],
@@ -230,7 +274,6 @@ class TaskController extends Controller
             'status' => 'P', // "Pending" por defecto
         ]);
 
-        // Redirigir con un mensaje de éxito
         return redirect()->route('tasks.thanks.client')->with('task_created', 'Task created successfully!');
     }
 }

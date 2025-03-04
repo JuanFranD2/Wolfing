@@ -5,10 +5,21 @@ namespace App\Http\Requests;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Request class to validate modifications to a task.
+ *
+ * This request handles the validation logic when modifying a task's information,
+ * including fields such as client, contact person, description, status, 
+ * realization date, and summary file. It also ensures that the realization 
+ * date is not earlier than the task's creation date.
+ */
 class ModifyTaskRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
+     *
+     * This method checks if the user is authorized to modify the task. 
+     * Custom authorization logic can be added if needed.
      *
      * @return bool
      */
@@ -20,6 +31,10 @@ class ModifyTaskRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
+     *
+     * This method defines the validation rules for each field when modifying a task,
+     * including validation for task status, dates, and file uploads.
+     * It also checks that the realization date is not earlier than the creation date.
      *
      * @return array
      */
@@ -66,6 +81,9 @@ class ModifyTaskRequest extends FormRequest
     /**
      * Get the custom attributes for the validation errors.
      *
+     * This method defines custom attribute names for the validation error messages,
+     * making them more user-friendly in the context of the task modification form.
+     *
      * @return array
      */
     public function attributes()
@@ -92,6 +110,9 @@ class ModifyTaskRequest extends FormRequest
     /**
      * Get the custom error messages for the validation rules.
      *
+     * This method returns custom error messages for each validation rule,
+     * ensuring that users receive clear feedback when validation fails.
+     *
      * @return array
      */
     public function messages()
@@ -112,7 +133,7 @@ class ModifyTaskRequest extends FormRequest
             'assigned_operator.required' => 'You must assign an operator.',
             'assigned_operator.exists' => 'The selected operator is invalid.',
             'status.required' => 'Please select a valid task status.',
-            'status.in' => 'The status must be required',
+            'status.in' => 'The status must be required.',
             'realization_date.date' => 'Please provide a valid realization date.',
             'realization_date.after_or_equal' => 'The realization date must be later than the creation date.',
             'previous_notes.string' => 'Previous notes must be a valid string.',

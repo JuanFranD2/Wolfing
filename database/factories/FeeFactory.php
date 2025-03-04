@@ -5,12 +5,24 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
+ * Factory class for creating Fee model instances.
+ *
+ * This factory provides a convenient way to generate fake data for the `Fee` model,
+ * useful for testing or seeding the database. It defines the default state for a Fee 
+ * instance, including values for fields such as CIF, concept, issue date, amount, 
+ * passed status, payment date, and notes.
+ *
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Fee>
  */
 class FeeFactory extends Factory
 {
     /**
      * Define the model's default state.
+     *
+     * This method defines the default state for the `Fee` model, using Faker 
+     * to generate fake data for each attribute. The CIF is fixed, but other fields 
+     * like concept, issue date, amount, passed status, payment date, and notes 
+     * are generated randomly or optionally.
      *
      * @return array<string, mixed>
      */

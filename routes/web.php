@@ -8,10 +8,12 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\ProvinceController;
 use Illuminate\Support\Facades\Route;
 
-/*Route::get('/', function () {
-    return view('welcome');
-});
-*/
+/**
+ * This file defines all the routes for the application, including those for 
+ * authentication, user profile management, tasks, fees, clients, and provinces.
+ * The routes are grouped by middleware and responsibilities (guest, authenticated, etc.).
+ */
+
 
 // Redirigir la raíz directamente a la ruta de login
 Route::redirect('/', '/login')->name('login');

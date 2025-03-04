@@ -11,16 +11,43 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * Command for generating monthly fees for all clients and sending invoices.
+ */
 class GenerateMonthlyFee extends Command
 {
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
     protected $signature = 'generate:monthly-fee';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
     protected $description = 'Generate monthly fees for all clients';
 
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         parent::__construct();
     }
 
+    /**
+     * Execute the console command.
+     *
+     * This method retrieves all clients and generates a monthly fee for each.
+     * It is invoked when the command is run.
+     *
+     * @return void
+     */
     public function handle()
     {
         $clients = Client::all(); // Obtener todos los clientes
@@ -32,9 +59,17 @@ class GenerateMonthlyFee extends Command
         $this->info('Monthly fees generated successfully.');
     }
 
+    /**
+     * Create the monthly fee for a client.
+     *
+     * This method generates a fee for the provided client with specific details 
+     * like concept, amount, issue date, and payment date.
+     *
+     * @param  \App\Models\Client  $client
+     * @return void
+     */
     private function createMonthlyFee(Client $client)
     {
-
         $monthName = Carbon::now()->locale('es')->isoFormat('MMMM'); // Obtener el mes en español
 
         // Definir el concepto y la fecha de emisión
@@ -58,27 +93,31 @@ class GenerateMonthlyFee extends Command
         $this->sendFeeInvoice($fee);
     }
 
-    public function sendFeeInvoice($fee)
+    /**
+     * Send the generated fee invoice to the client via email.
+     *
+     * This method generates a PDF invoice for the fee and sends it to the
+     * client's email address.
+     *
+     * @param  \App\Models\Fee  $fee
+     * @return bool
+     */
+    public function sendFeeInvoice(Fee $fee)
     {
-        // Obtener el cliente relacionado con la cuota
-        $client = $fee->client;
+        $client = $fee->client; // Obtener cliente de la fee
+        $pdf = Pdf::loadView('fees.invoice', compact('fee'))->setPaper('a4', 'portrait');
 
-        // Generar el PDF a partir de una vista
-        $pdf = Pdf::loadView('fees.invoice', compact('fee'));
-
-        // Definir la ruta del archivo PDF usando almacenamiento de Laravel
         $pdfPath = 'fee_invoices/invoice_' . $fee->id . '.pdf';
 
         // Guardar el PDF en el almacenamiento público
         Storage::disk('public')->put($pdfPath, $pdf->output());
 
-        // Enviar el correo con el PDF adjunto directamente
-        Mail::to($client->email)->send(new FeeInvoiceMail($pdf->output()));
+        // Ruta al archivo PDF guardado
+        $pathToFile = storage_path('app/public/' . $pdfPath);
 
-        // Eliminar el archivo PDF después de enviarlo (opcional, descomentar si quieres eliminarlo)
-        // Storage::disk('public')->delete($pdfPath);
+        // Enviar el correo con el PDF adjunto
+        Mail::to($client->email)->send(new FeeInvoiceMail($fee, $pathToFile));
 
-        // Devolver true si todo salió bien
-        return true;
+        return response()->json(['message' => 'Invoice sent successfully'], 200);
     }
 }

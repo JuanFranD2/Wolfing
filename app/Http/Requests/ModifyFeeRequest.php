@@ -4,10 +4,19 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Request class to validate modifications to a fee.
+ *
+ * This request handles the validation logic when modifying a fee,
+ * including fields such as CIF, concept, amount, and notes.
+ */
 class ModifyFeeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
+     *
+     * This method assumes the user is authorized to modify the fee. 
+     * It could be extended with custom authorization logic if necessary.
      *
      * @return bool
      */
@@ -18,6 +27,9 @@ class ModifyFeeRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
+     *
+     * This method defines the validation rules for each field when modifying the fee.
+     * Fields such as CIF, concept, amount, and notes are required and validated accordingly.
      *
      * @return array
      */
@@ -33,6 +45,9 @@ class ModifyFeeRequest extends FormRequest
 
     /**
      * Get custom messages for validation errors.
+     *
+     * This method returns custom error messages for each validation rule,
+     * ensuring that users receive clear feedback when validation fails.
      *
      * @return array
      */

@@ -4,10 +4,21 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Request class to validate storing a new task.
+ *
+ * This request handles the validation logic for creating a new task,
+ * including validating fields such as client, contact person, phone number,
+ * description, and more.
+ */
 class StoreTaskRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
+     *
+     * This method checks if the user is authorized to create a new task. 
+     * It returns true, assuming that any authenticated user can create a task.
+     * You can add additional authorization logic if necessary.
      *
      * @return bool
      */
@@ -20,6 +31,11 @@ class StoreTaskRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
+     * This method defines the validation rules for each field when creating 
+     * a new task, including the client, contact information, and task details.
+     * It ensures that fields such as phone number, postal code, and province 
+     * meet specific formatting requirements.
+     *
      * @return array
      */
     public function rules()
@@ -31,8 +47,8 @@ class StoreTaskRequest extends FormRequest
             'contact_phone' => 'required|digits:9|regex:/^[0-9]+$/', // Teléfono debe ser numérico y tener exactamente 9 dígitos
             'postal_code' => 'nullable|regex:/^\d{5}$/', // Código postal debe tener 5 dígitos
             'province' => 'required|exists:provinces,cod', // La provincia debe ser obligatoria y debe existir en la tabla 'provinces'
-            'contact_email' => 'required|email',
-            'status' => 'required', // El correo debe ser obligatorio y con un formato válido
+            'contact_email' => 'required|email', // El correo debe ser obligatorio y con un formato válido
+            'status' => 'required', // El estado debe ser obligatorio
             'address' => 'required|string', // La dirección debe ser obligatoria
             'city' => 'required|string', // La ciudad debe ser obligatoria
             'assigned_operator' => 'required|exists:users,id', // El operador asignado debe ser obligatorio y debe existir un operador con ese id
@@ -42,6 +58,9 @@ class StoreTaskRequest extends FormRequest
 
     /**
      * Get the custom error messages for validation.
+     *
+     * This method returns custom error messages for each validation rule,
+     * ensuring that users receive clear feedback when validation fails.
      *
      * @return array
      */

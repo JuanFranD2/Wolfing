@@ -4,10 +4,20 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Request class to validate storing a new client.
+ *
+ * This request handles the validation logic when creating a new client,
+ * including fields such as CIF, name, phone, email, bank account, country, 
+ * currency, and monthly fee.
+ */
 class StoreClientRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
+     *
+     * This method checks if the user is authorized to create a new client. 
+     * You can add custom authorization logic if necessary.
      *
      * @return bool
      */
@@ -20,6 +30,9 @@ class StoreClientRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
+     * This method defines the validation rules for each field when storing a new client.
+     * Fields like CIF, email, and phone number are validated to ensure uniqueness and correct formatting.
+     *
      * @return array
      */
     public function rules()
@@ -27,17 +40,20 @@ class StoreClientRequest extends FormRequest
         return [
             'cif' => 'required|unique:clients,cif',           // CIF único
             'name' => 'required|string|max:255',               // Nombre requerido
-            'phone' => 'required|digits:9|regex:/^[0-9]+$/',               // Teléfono opcional
+            'phone' => 'required|digits:9|regex:/^[0-9]+$/',   // Teléfono requerido y debe ser de 9 dígitos
             'email' => 'required|email|unique:clients,email',  // Email único
             'bank_account' => 'required|string|max:255',       // Cuenta bancaria opcional
-            'country' => 'required|string|max:255',            // País opcional
+            'country' => 'required|string|max:255',            // País obligatorio
             'currency' => 'nullable|string|max:3',             // Moneda opcional
-            'monthly_fee' => 'required|numeric|min:0',         // Cuota mensual, obligatorio y numérico
+            'monthly_fee' => 'required|numeric|min:0',         // Cuota mensual obligatoria y debe ser numérica
         ];
     }
 
     /**
      * Get the custom error messages for the validation rules.
+     *
+     * This method returns custom error messages for each validation rule,
+     * providing users with clear feedback when validation fails.
      *
      * @return array
      */

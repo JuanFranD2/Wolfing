@@ -10,10 +10,17 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * Controller for managing fees and generating invoices.
+ */
 class FeeController extends Controller
 {
     /**
      * Display a listing of the fees.
+     *
+     * This method retrieves and paginates all fees, showing them in the view.
+     *
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -23,21 +30,27 @@ class FeeController extends Controller
         // Retornar la vista con las cuotas
         return view('fees.showFees', compact('fees'));
     }
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
+    /**
+     * Show the form for creating a new extraordinary fee.
+     *
+     * This method returns the view to create an extraordinary fee.
+     *
+     * @return \Illuminate\View\View
+     */
     public function createExtraordinary()
     {
         return view('fees.newExtraordinaryFee');  // Vista para New Extraordinary Fee
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created extraordinary fee in storage.
+     *
+     * This method validates the request data and stores the extraordinary fee.
+     * It then generates and sends an invoice for the created fee.
+     *
+     * @param  \App\Http\Requests\StoreNewExtraordinaryFeeRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreNewExtraordinaryFeeRequest $request)
     {
@@ -58,6 +71,14 @@ class FeeController extends Controller
         return redirect()->route('fees.index')->with('success', 'Extraordinary fee created successfully.');
     }
 
+    /**
+     * Send the generated fee invoice to the client via email.
+     *
+     * This method generates a PDF invoice for the fee and sends it to the client's email.
+     *
+     * @param  \App\Models\Fee  $fee
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function sendFeeInvoice(Fee $fee)
     {
         $client = $fee->client; // Obtener cliente de la fee
@@ -77,10 +98,13 @@ class FeeController extends Controller
         return response()->json(['message' => 'Invoice sent successfully'], 200);
     }
 
-
-
     /**
      * Display the details of a specific fee.
+     *
+     * This method retrieves a fee by its ID and passes it to the view for display.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
      */
     public function show($id)
     {
@@ -92,7 +116,12 @@ class FeeController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified fee.
+     *
+     * This method retrieves a fee by its ID and passes it to the view for editing.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
      */
     public function edit($id)
     {
@@ -104,7 +133,13 @@ class FeeController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified fee in storage.
+     *
+     * This method validates the request data, updates the fee, and regenerates its invoice.
+     *
+     * @param  \App\Http\Requests\ModifyFeeRequest  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(ModifyFeeRequest $request, $id)
     {
@@ -135,7 +170,12 @@ class FeeController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified fee from storage.
+     *
+     * This method deletes the specified fee from the database and returns a success message.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(string $id)
     {
