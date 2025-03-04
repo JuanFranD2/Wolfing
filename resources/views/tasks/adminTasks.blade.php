@@ -34,7 +34,7 @@
                             </form>
 
 
-                            <a href="{{ route('tasks.formCreate') }}"
+                            <a href="{{ route('tasks.formCreateAdmin') }}"
                                 class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600">
                                 New Task
                             </a>

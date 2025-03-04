@@ -13,7 +13,7 @@
                         <div class="flex justify-between items-center mb-4">
                             <h1 class="text-xl font-semibold">Fees</h1>
                             <!-- Botón New Extraordinary Fee -->
-                            <a href="{{ route('fees.createExtraordinary') }}"
+                            <a href="{{ route('fees.createExtraordinaryFee') }}"
                                 class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600">
                                 New Extraordinary Fee
                             </a>

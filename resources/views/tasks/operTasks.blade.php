@@ -54,7 +54,7 @@
                                                 class="px-4 py-2 whitespace-nowrap flex flex-wrap items-center justify-center space-y-1">
                                                 <!-- Fila superior (S y M) -->
                                                 <div class="flex space-x-1">
-                                                    <a href="{{ route('tasks.show', $task->id) }}"
+                                                    <a href="{{ route('tasks.showOper', $task->id) }}"
                                                         class="w-6 h-6 flex items-center justify-center text-xs text-white bg-orange-500 rounded-md hover:bg-orange-600">
                                                         S
                                                     </a>

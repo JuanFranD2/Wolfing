@@ -159,19 +159,22 @@ class TaskController extends Controller
      * This method shows the task creation form based on the user's role (admin, client).
      *
      */
-    public function formCreate()
+    public function create()
     {
         $provinces = Province::all();
         $operators = User::where('type', 'oper')->get(['id', 'name']);
 
-        if (Auth::user()->type === 'admin') {
-            return view('tasks.newTaskAdmin', compact('provinces', 'operators'));
-        } elseif (Auth::user()->type === 'client') {
-            return view('tasks.newTaskClient', compact('provinces', 'operators'));
-        }
-
-        return redirect()->route('tasks.index')->with('error', 'Unauthorized access');
+        return view('tasks.newTaskAdmin', compact('provinces', 'operators'));
     }
+
+    public function createClient()
+    {
+        $provinces = Province::all();
+        $operators = User::where('type', 'oper')->get(['id', 'name']);
+
+        return view('tasks.newTaskClient', compact('provinces', 'operators'));
+    }
+
 
     /**
      * Show the form for editing an existing task.
@@ -181,7 +184,7 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\View\View
      */
-    public function formEdit($id)
+    public function edit($id)
     {
         $task = Task::findOrFail($id);
         $provinces = Province::all();

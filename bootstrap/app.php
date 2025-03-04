@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\OperMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -12,11 +14,15 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
         then: function () {
             Route::prefix('task')
-            ->group(base_path('routes/task.php'));
+                ->group(base_path('routes/task.php'));
         }
     )
     ->withMiddleware(function (Middleware $middleware) {
         //
+        $middleware->alias([
+            "admin" => AdminMiddleware::class,
+            "oper" => OperMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
