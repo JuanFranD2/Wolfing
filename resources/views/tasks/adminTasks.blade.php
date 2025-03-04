@@ -15,7 +15,7 @@
 
                             <form action="{{ route('tasks.index') }}" method="GET" class="flex space-x-4">
                                 <select name="status" id="status"
-                                    class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-900">
+                                    class="px-4 py-0 bg-purple-600 text-white rounded-md hover:bg-purple-900">
                                     <option value="all" {{ request('status') == 'all' ? 'selected' : '' }}>All Tasks
                                     </option>
                                     <option value="P" {{ request('status') == 'P' ? 'selected' : '' }}>Tasks
@@ -30,7 +30,7 @@
                                         Cancelled</option>
                                 </select>
                                 <button type="submit"
-                                    class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Filter</button>
+                                    class="px-4 py-0 bg-blue-500 text-white rounded-md hover:bg-blue-600">Filter</button>
                             </form>
 
 

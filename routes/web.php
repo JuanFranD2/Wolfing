@@ -33,12 +33,10 @@ Route::middleware('auth')->group(function () {
 
     // Ruta para mostrar todas las cuotas
     Route::get('/fees', [FeeController::class, 'index'])->name('fees.index');
-
+    Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
+    Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
     Route::get('/fees/create-extraordinary', [FeeController::class, 'createExtraordinary'])->name('fees.createExtraordinary');
 });
-
-// Ruta para verTareas
-Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index')->middleware('auth');
 
 // Ruta para mostrar formulario crearTarea
 Route::get('/tasks/formCreate', [TaskController::class, 'formCreate'])->name('tasks.formCreate');
@@ -73,9 +71,6 @@ Route::post('/tasks/create/client', [TaskController::class, 'storeClientTask'])-
 Route::get('/thanks-client', function () {
     return view('tasks.thanksClient');
 })->name('tasks.thanks.client');
-
-// Ruta para verClientes
-Route::get('/clients', [ClientController::class, 'index'])->name('clients.index')->middleware('auth');
 
 // Ruta para mostrar el formulario de creación de un cliente
 Route::get('/clients/create', [ClientController::class, 'create'])->name('clients.create');
