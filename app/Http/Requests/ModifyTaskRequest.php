@@ -5,14 +5,31 @@ namespace App\Http\Requests;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
+
 /**
- * Request class to validate modifications to a task.
- *
- * This request handles the validation logic when modifying a task's information,
- * including fields such as client, contact person, description, status, 
- * realization date, and summary file. It also ensures that the realization 
- * date is not earlier than the task's creation date.
+ * @OA\Schema(
+ * schema="ModifyTaskRequest",
+ * title="Modify Task Request",
+ * description="Request para modificar una tarea existente.",
+ * required={"client", "contact_person", "contact_email", "contact_phone", "description", "address", "city", "postal_code", "province", "assigned_operator", "status"},
+ * @OA\Property(property="client", type="string", description="Nombre del cliente."),
+ * @OA\Property(property="contact_person", type="string", description="Persona de contacto."),
+ * @OA\Property(property="contact_email", type="string", format="email", description="Correo electrónico de contacto."),
+ * @OA\Property(property="contact_phone", type="string", description="Teléfono de contacto (9 dígitos)."),
+ * @OA\Property(property="description", type="string", description="Descripción de la tarea."),
+ * @OA\Property(property="address", type="string", description="Dirección."),
+ * @OA\Property(property="city", type="string", description="Ciudad."),
+ * @OA\Property(property="postal_code", type="string", description="Código postal (5 dígitos)."),
+ * @OA\Property(property="province", type="string", description="Provincia."),
+ * @OA\Property(property="assigned_operator", type="integer", description="ID del operador asignado."),
+ * @OA\Property(property="status", type="string", description="Estado de la tarea (P, E, R, C, X)."),
+ * @OA\Property(property="realization_date", type="string", format="date", description="Fecha de realización (opcional)."),
+ * @OA\Property(property="previous_notes", type="string", description="Notas previas (opcional)."),
+ * @OA\Property(property="subsequent_notes", type="string", description="Notas posteriores (opcional)."),
+ * @OA\Property(property="summary_file", type="string", format="binary", description="Archivo de resumen (PDF, máximo 10MB, opcional).")
+ * )
  */
+
 class ModifyTaskRequest extends FormRequest
 {
     /**

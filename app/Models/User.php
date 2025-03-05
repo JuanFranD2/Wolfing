@@ -5,69 +5,48 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use OpenApi\Annotations as OA;
 
 /**
- * User model class.
- *
- * This class represents a user entity and provides methods to interact with 
- * the `users` table in the database. It includes fields such as name, email, 
- * password, DNI, phone, address, and type. The class also uses authentication 
- * and notification features provided by Laravel.
+ * @OA\Schema(
+ * schema="User",
+ * title="User",
+ * description="Modelo de usuario.",
+ * @OA\Property(property="id", type="integer", description="ID del usuario."),
+ * @OA\Property(property="name", type="string", description="Nombre del usuario."),
+ * @OA\Property(property="email", type="string", format="email", description="Correo electrónico del usuario."),
+ * @OA\Property(property="dni", type="string", description="DNI del usuario."),
+ * @OA\Property(property="phone", type="string", description="Teléfono del usuario."),
+ * @OA\Property(property="address", type="string", description="Dirección del usuario."),
+ * @OA\Property(property="type", type="string", description="Tipo de usuario (admin, oper)."),
+ * @OA\Property(property="created_at", type="string", format="date-time", description="Fecha de creación del usuario.")
+ * )
  */
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * This property defines the attributes that can be mass assigned (i.e., 
-     * those that can be filled directly via array input). It helps prevent mass 
-     * assignment vulnerabilities by specifying which attributes are allowed to be 
-     * assigned.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
-        'name',         // Name of the user
-        'email',        // Email address of the user
-        'password',     // Password of the user
-        'dni',          // DNI of the user
-        'phone',        // Phone number of the user
-        'address',      // Address of the user
-        'type',         // Type of the user (admin, client, etc.)
-        'created_at',   // Date the user was created
+        'name',
+        'email',
+        'password',
+        'dni',
+        'phone',
+        'address',
+        'type',
+        'created_at',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * This property defines which attributes should be hidden when the model is 
-     * serialized into an array or JSON. In this case, sensitive data like the 
-     * password and remember token are hidden.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
-        'password',       // Hides the password field
-        'remember_token', // Hides the remember token field
+        'password',
+        'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * This method defines the casting of certain attributes. For instance, 
-     * `email_verified_at` is cast to a datetime, and the `password` is cast 
-     * to a hashed value.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',  // Cast the email_verified_at to datetime
-            'password' => 'hashed',             // Cast the password to a hashed value
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
         ];
     }
 }

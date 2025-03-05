@@ -5,10 +5,16 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Request class to validate the creation of a new extraordinary fee.
- *
- * This request handles the validation logic for creating a new extraordinary fee,
- * including validating fields such as CIF, concept, amount, and notes.
+ * @OA\Schema(
+ * schema="StoreNewExtraordinaryFeeRequest",
+ * title="Store New Extraordinary Fee Request",
+ * description="Request para almacenar una nueva cuota extraordinaria.",
+ * required={"cif", "concept", "amount", "notes"},
+ * @OA\Property(property="cif", type="string", description="CIF del cliente."),
+ * @OA\Property(property="concept", type="string", description="Concepto de la cuota extraordinaria."),
+ * @OA\Property(property="amount", type="number", format="float", description="Monto de la cuota extraordinaria."),
+ * @OA\Property(property="notes", type="string", description="Notas adicionales.")
+ * )
  */
 class StoreNewExtraordinaryFeeRequest extends FormRequest
 {

@@ -5,10 +5,19 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Request class to validate the modification of an operational user.
- *
- * This request handles the validation logic when modifying an operational user's information,
- * including fields such as name, email, password, DNI, phone, address, and type.
+ * @OA\Schema(
+ * schema="ModifyOperUserRequest",
+ * title="Modify Oper User Request",
+ * description="Request para modificar un usuario operativo existente.",
+ * required={"name", "email", "dni", "type"},
+ * @OA\Property(property="name", type="string", description="Nombre del usuario."),
+ * @OA\Property(property="email", type="string", format="email", description="Correo electrónico del usuario."),
+ * @OA\Property(property="password", type="string", format="password", description="Contraseña del usuario (opcional)."),
+ * @OA\Property(property="dni", type="string", description="DNI del usuario."),
+ * @OA\Property(property="phone", type="string", description="Teléfono del usuario (opcional)."),
+ * @OA\Property(property="address", type="string", description="Dirección del usuario (opcional)."),
+ * @OA\Property(property="type", type="string", description="Tipo de usuario (oper, admin, client).")
+ * )
  */
 class ModifyOperUserRequest extends FormRequest
 {

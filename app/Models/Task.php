@@ -6,37 +6,35 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Task model class.
- *
- * This class represents a task entity and provides methods to interact with 
- * the `tasks` table in the database. It includes fields such as client, contact person, 
- * description, contact information, address, status, and associated dates.
- * The class also defines relationships to the `User` model for the assigned operator 
- * and the `Province` model for the province.
+ * @OA\Schema(
+ * schema="Task",
+ * title="Task",
+ * description="Modelo de tarea.",
+ * @OA\Property(property="id", type="integer", description="ID de la tarea."),
+ * @OA\Property(property="client", type="string", description="Nombre del cliente."),
+ * @OA\Property(property="contact_person", type="string", description="Persona de contacto."),
+ * @OA\Property(property="contact_email", type="string", description="Email de contacto."),
+ * @OA\Property(property="contact_phone", type="string", description="Teléfono de contacto."),
+ * @OA\Property(property="description", type="string", description="Descripción de la tarea."),
+ * @OA\Property(property="address", type="string", description="Dirección."),
+ * @OA\Property(property="city", type="string", description="Ciudad."),
+ * @OA\Property(property="postal_code", type="string", description="Código postal."),
+ * @OA\Property(property="province", type="integer", description="ID de la provincia."),
+ * @OA\Property(property="assigned_operator", type="integer", description="ID del operador asignado."),
+ * @OA\Property(property="status", type="string", description="Estado de la tarea."),
+ * @OA\Property(property="realization_date", type="string", format="date-time", description="Fecha de realización."),
+ * @OA\Property(property="previous_notes", type="string", description="Notas previas."),
+ * @OA\Property(property="subsequent_notes", type="string", description="Notas posteriores."),
+ * @OA\Property(property="summary_file", type="string", description="Ruta del archivo de resumen.")
+ * )
  */
 class Task extends Model
 {
     use HasFactory;
 
-    /**
-     * The table associated with the model.
-     *
-     * This property defines the name of the database table associated with the model.
-     *
-     * @var string
-     */
+
     protected $table = 'tasks';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * This property defines the attributes that can be mass assigned (i.e., 
-     * those that can be filled directly via array input). It helps prevent mass 
-     * assignment vulnerabilities by specifying which attributes are allowed to be 
-     * assigned.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'client',
         'contact_person',
@@ -55,59 +53,24 @@ class Task extends Model
         'summary_file',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * This property defines the types to which certain attributes should be cast. 
-     * For example, `realization_date`, `created_at`, and `updated_at` are cast 
-     * to the respective date and datetime types.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'realization_date' => 'date',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
 
-    /**
-     * Relationship to the User model for the assigned operator.
-     *
-     * This method defines the relationship between a task and the operator assigned 
-     * to it. A task belongs to a user (the operator).
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function operator()
     {
         return $this->belongsTo(User::class, 'assigned_operator');
     }
 
-    /**
-     * Relationship to the Province model for the task's province.
-     *
-     * This method defines the relationship between a task and the province where 
-     * it is located. A task belongs to a province, and the `province` column in 
-     * the `tasks` table is linked to the `cod` column in the `provinces` table.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function prov()
     {
         return $this->belongsTo(Province::class, 'province', 'cod');  // 'province' es la columna en Task y 'cod' es la columna en Province
     }
 
-    /**
-     * Accessor to get the formatted realization date.
-     *
-     * This method formats the `realization_date` attribute to `Y-m-d H:i:s` if it's 
-     * not null. If it's null, it returns the string "No realization date".
-     *
-     * @return string
-     */
     public function getRealizationDateAttribute($value)
     {
-        // Si 'realization_date' no es nulo, lo formateamos en 'Y-m-d H:i:s'
         return $value ? \Carbon\Carbon::parse($value)->format('Y-m-d H:i:s') : 'No realization date';
     }
 }

@@ -1,0 +1,1766 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Task API",
+        "description": "API para gestionar tareas.",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/clients": {
+            "get": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Lista todos los clientes",
+                "operationId": "af1f3794367a5e843bf15e3a9033d911",
+                "responses": {
+                    "200": {
+                        "description": "Lista de clientes.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Client"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Almacena un nuevo cliente",
+                "operationId": "15981a5da120d8b4ea1b91b05a35622b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreClientRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "302": {
+                        "description": "Redirecciona a la lista de clientes con mensaje de éxito."
+                    }
+                }
+            }
+        },
+        "/clients/{id}": {
+            "get": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Muestra los detalles de un cliente",
+                "operationId": "2965e9737f628d15ea88209095622c24",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del cliente.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles del cliente.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Client"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Elimina un cliente",
+                "operationId": "20de5e8bdef993807384fd7040f9ae92",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del cliente a eliminar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Redirecciona a la lista de clientes."
+                    }
+                }
+            }
+        },
+        "/clients/create": {
+            "get": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Muestra el formulario para crear un nuevo cliente",
+                "operationId": "b42b43a4d24d65af67245032f712451e",
+                "responses": {
+                    "200": {
+                        "description": "Formulario de creación de cliente."
+                    }
+                }
+            }
+        },
+        "/clients/send-invoice/{id}": {
+            "post": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Envía la factura de una cuota por correo electrónico",
+                "operationId": "be4cf21741abc04b98483a4698fc8d1a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la cuota.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Factura enviada correctamente."
+                    }
+                }
+            }
+        },
+        "/clients/{client}/edit": {
+            "get": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Muestra el formulario para editar un cliente",
+                "operationId": "27161bb9e8a4e561dfd01094a82c4d62",
+                "parameters": [
+                    {
+                        "name": "client",
+                        "in": "path",
+                        "description": "ID del cliente a editar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Formulario de edición de cliente."
+                    }
+                }
+            }
+        },
+        "/clients/{client}": {
+            "put": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Actualiza un cliente existente",
+                "operationId": "558832db987fc02c8a5107fb013891c9",
+                "parameters": [
+                    {
+                        "name": "client",
+                        "in": "path",
+                        "description": "ID del cliente a actualizar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ModifyClientRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "302": {
+                        "description": "Redirecciona a la lista de clientes con mensaje de éxito."
+                    }
+                }
+            }
+        },
+        "/fees": {
+            "get": {
+                "tags": [
+                    "Fees"
+                ],
+                "summary": "Lista todas las cuotas",
+                "operationId": "6968c794805ccbda232e2c34d376eeed",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Buscar cuotas por nombre de cliente.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de cuotas.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Fee"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Fees"
+                ],
+                "summary": "Almacena una nueva cuota extraordinaria",
+                "operationId": "567ac89b621efb68d966cb786c2ca0b3",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreNewExtraordinaryFeeRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "302": {
+                        "description": "Redirecciona a la lista de cuotas con mensaje de éxito."
+                    }
+                }
+            }
+        },
+        "/fees/create-extraordinary": {
+            "get": {
+                "tags": [
+                    "Fees"
+                ],
+                "summary": "Muestra el formulario para crear una nueva cuota extraordinaria",
+                "operationId": "0fb4e2e26bc1ba29cc9925cdd76de69f",
+                "responses": {
+                    "200": {
+                        "description": "Formulario de creación de cuota extraordinaria."
+                    }
+                }
+            }
+        },
+        "/fees/{id}/send-invoice": {
+            "post": {
+                "tags": [
+                    "Fees"
+                ],
+                "summary": "Envía la factura de una cuota por correo electrónico",
+                "operationId": "5dec78fc08233324ad373a74e5e5a782",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la cuota.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Factura enviada correctamente."
+                    }
+                }
+            }
+        },
+        "/fees/{id}": {
+            "get": {
+                "tags": [
+                    "Fees"
+                ],
+                "summary": "Muestra los detalles de una cuota",
+                "operationId": "397b6250baa868a6292741e9180da60f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la cuota.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles de la cuota.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Fee"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Fees"
+                ],
+                "summary": "Elimina una cuota",
+                "operationId": "f0855d57e721fa7d5bf793c774314d18",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la cuota a eliminar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Redirecciona a la lista de cuotas con mensaje de éxito."
+                    }
+                }
+            }
+        },
+        "/fees/{id}/edit": {
+            "get": {
+                "tags": [
+                    "Fees"
+                ],
+                "summary": "Muestra el formulario para editar una cuota",
+                "operationId": "4737667ffd39c788fa72235ea6d8146b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la cuota a editar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Formulario de edición de cuota."
+                    }
+                }
+            }
+        },
+        "/operUsers": {
+            "get": {
+                "tags": [
+                    "Operational Users"
+                ],
+                "summary": "Lista todos los usuarios operativos",
+                "operationId": "e9a64bed9d368678d95a463744e44346",
+                "responses": {
+                    "200": {
+                        "description": "Lista de usuarios operativos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/User"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Operational Users"
+                ],
+                "summary": "Almacena un nuevo usuario operativo",
+                "operationId": "41ac362a32670733395a0253b91a826a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreOperUserRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "302": {
+                        "description": "Redirecciona a la lista de usuarios operativos con mensaje de éxito."
+                    }
+                }
+            }
+        },
+        "/operUsers/create": {
+            "get": {
+                "tags": [
+                    "Operational Users"
+                ],
+                "summary": "Muestra el formulario para crear un nuevo usuario operativo",
+                "operationId": "0934b1e3754c79d736354f190fc4391c",
+                "responses": {
+                    "200": {
+                        "description": "Formulario de creación de usuario operativo."
+                    }
+                }
+            }
+        },
+        "/operUsers/{id}": {
+            "get": {
+                "tags": [
+                    "Operational Users"
+                ],
+                "summary": "Muestra los detalles de un usuario operativo",
+                "operationId": "a0ac02f99140c32d3214dc4006e8bac8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del usuario operativo.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles del usuario operativo.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Operational Users"
+                ],
+                "summary": "Actualiza un usuario operativo existente",
+                "operationId": "a31b3625252ca689baa4adcdbcf30cb2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del usuario operativo a actualizar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ModifyOperUserRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "302": {
+                        "description": "Redirecciona a la lista de usuarios operativos con mensaje de éxito."
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Operational Users"
+                ],
+                "summary": "Elimina un usuario operativo",
+                "operationId": "0fc23662b8504013a3b40e83b06369aa",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del usuario operativo a eliminar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Redirecciona a la lista de usuarios operativos con mensaje de éxito."
+                    }
+                }
+            }
+        },
+        "/operUsers/{user}/edit": {
+            "get": {
+                "tags": [
+                    "Operational Users"
+                ],
+                "summary": "Muestra el formulario para editar un usuario operativo",
+                "operationId": "87a2af0268ee163081f9dab0252b0220",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "ID del usuario operativo a editar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Formulario de edición de usuario operativo."
+                    }
+                }
+            }
+        },
+        "/provinces": {
+            "get": {
+                "tags": [
+                    "Provinces"
+                ],
+                "summary": "Lista todas las provincias",
+                "operationId": "59577da69a733e49ff503cd1100a2860",
+                "responses": {
+                    "200": {
+                        "description": "Lista de provincias.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Province"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Provinces"
+                ],
+                "summary": "Almacena una nueva provincia",
+                "operationId": "26afd240838d142bac073ce82c8f4234",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Province"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "302": {
+                        "description": "Redirecciona a la lista de provincias con mensaje de éxito."
+                    }
+                }
+            }
+        },
+        "/provinces/create": {
+            "get": {
+                "tags": [
+                    "Provinces"
+                ],
+                "summary": "Muestra el formulario para crear una nueva provincia",
+                "operationId": "d7424ae45892a5ba0bda55802410e1ac",
+                "responses": {
+                    "200": {
+                        "description": "Formulario de creación de provincia."
+                    }
+                }
+            }
+        },
+        "/provinces/{province}/edit": {
+            "get": {
+                "tags": [
+                    "Provinces"
+                ],
+                "summary": "Muestra el formulario para editar una provincia",
+                "operationId": "938f77410553890fc09744edca8867fe",
+                "parameters": [
+                    {
+                        "name": "province",
+                        "in": "path",
+                        "description": "ID de la provincia a editar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Formulario de edición de provincia."
+                    }
+                }
+            }
+        },
+        "/provinces/{province}": {
+            "put": {
+                "tags": [
+                    "Provinces"
+                ],
+                "summary": "Actualiza una provincia existente",
+                "operationId": "86ed57588821530ac39e2a2f04fbb238",
+                "parameters": [
+                    {
+                        "name": "province",
+                        "in": "path",
+                        "description": "ID de la provincia a actualizar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Province"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "302": {
+                        "description": "Redirecciona a la lista de provincias con mensaje de éxito."
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Provinces"
+                ],
+                "summary": "Elimina una provincia",
+                "operationId": "11883907aeeac037ab938af08104f5b3",
+                "parameters": [
+                    {
+                        "name": "province",
+                        "in": "path",
+                        "description": "ID de la provincia a eliminar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Redirecciona a la lista de provincias con mensaje de éxito."
+                    }
+                }
+            }
+        },
+        "/api/tasks": {
+            "get": {
+                "tags": [
+                    "Tareas"
+                ],
+                "summary": "Obtiene una lista de tareas.",
+                "description": "Lista de tareas.",
+                "operationId": "471d938a3bfaeb6fbd981d7c3e2728b0",
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Filtrar por estado (all, P, E, C).",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de tareas obtenida exitosamente.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Task"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Tareas"
+                ],
+                "summary": "Almacena una nueva tarea.",
+                "description": "Almacenar una nueva tarea en el almacenamiento.",
+                "operationId": "f803ebdb2300acdb7e93bbe8d0b9a2e8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreTaskRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tarea creada exitosamente."
+                    },
+                    "422": {
+                        "description": "Datos de entrada no válidos."
+                    }
+                }
+            }
+        },
+        "/api/tasks/{id}": {
+            "get": {
+                "tags": [
+                    "Tareas"
+                ],
+                "summary": "Obtiene los detalles de una tarea específica.",
+                "description": "Mostrar detalles de una tarea específica.",
+                "operationId": "90b3cd4d2d4b416dc989d2055dbed06c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la tarea.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles de la tarea obtenidos exitosamente.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Task"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Tarea no encontrada."
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Tareas"
+                ],
+                "summary": "Actualiza una tarea específica.",
+                "description": "Actualizar una tarea específica en el almacenamiento.",
+                "operationId": "1aaf37e74360ef4c10fadaee02ae77fb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la tarea a actualizar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ModifyTaskRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tarea actualizada exitosamente."
+                    },
+                    "404": {
+                        "description": "Tarea no encontrada."
+                    },
+                    "422": {
+                        "description": "Datos de entrada no válidos."
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Tareas"
+                ],
+                "summary": "Elimina una tarea específica.",
+                "description": "Eliminar una tarea específica.",
+                "operationId": "ad582480cd57c2a4e3b6a426943eeca5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la tarea a eliminar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tarea eliminada exitosamente."
+                    },
+                    "404": {
+                        "description": "Tarea no encontrada."
+                    }
+                }
+            }
+        },
+        "/api/tasks/{id}/complete": {
+            "get": {
+                "tags": [
+                    "Tareas"
+                ],
+                "summary": "Muestra el formulario para completar una tarea.",
+                "description": "Mostrar formulario para completar una tarea.",
+                "operationId": "bf22649c8295acbdf5b85d24c2b544b9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la tarea a completar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Formulario para completar la tarea mostrado exitosamente."
+                    },
+                    "404": {
+                        "description": "Tarea no encontrada."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Tareas"
+                ],
+                "summary": "Completa una tarea específica.",
+                "description": "Completar una tarea.",
+                "operationId": "93544830d9b827807253b65ef8b7d88d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la tarea a completar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CompleteTaskRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tarea completada exitosamente."
+                    },
+                    "404": {
+                        "description": "Tarea no encontrada."
+                    }
+                }
+            }
+        },
+        "/api/tasks/create": {
+            "get": {
+                "tags": [
+                    "Tareas"
+                ],
+                "summary": "Muestra el formulario para crear una nueva tarea.",
+                "description": "Mostrar formulario para crear una nueva tarea.",
+                "operationId": "1d1fdc1b690e6cb2619460a6a7592058",
+                "responses": {
+                    "200": {
+                        "description": "Formulario para crear la tarea mostrado exitosamente."
+                    }
+                }
+            }
+        },
+        "/api/tasks/create/client": {
+            "get": {
+                "tags": [
+                    "Tareas"
+                ],
+                "summary": "Muestra el formulario para crear una nueva tarea para un cliente.",
+                "description": "Mostrar formulario para crear una nueva tarea para un cliente.",
+                "operationId": "bed8e496c411017ab8f70f6e6ae940ca",
+                "responses": {
+                    "200": {
+                        "description": "Formulario para crear la tarea para el cliente mostrado exitosamente."
+                    }
+                }
+            }
+        },
+        "/api/tasks/{id}/edit": {
+            "get": {
+                "tags": [
+                    "Tareas"
+                ],
+                "summary": "Muestra el formulario para editar una tarea existente.",
+                "description": "Mostrar formulario para editar una tarea existente.",
+                "operationId": "0c6e9b9518c3380edab73353c6dd5849",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la tarea a editar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Formulario para editar la tarea mostrado exitosamente."
+                    },
+                    "404": {
+                        "description": "Tarea no encontrada."
+                    }
+                }
+            }
+        },
+        "/api/tasks/client": {
+            "post": {
+                "tags": [
+                    "Tareas"
+                ],
+                "summary": "Almacena una nueva tarea creada por un cliente.",
+                "description": "Almacenar una nueva tarea para el cliente.",
+                "operationId": "05019c9ac31be61bc4b134b352c73805",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NewTaskClientRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tarea creada por el cliente exitosamente."
+                    },
+                    "422": {
+                        "description": "Datos de entrada no válidos."
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "CompleteTaskRequest": {
+                "title": "Complete Task Request",
+                "description": "Request para completar una tarea existente.",
+                "required": [
+                    "status",
+                    "subsequent_notes",
+                    "summary_file"
+                ],
+                "properties": {
+                    "status": {
+                        "description": "Estado de la tarea (C: Completada, X: Cancelada).",
+                        "type": "string"
+                    },
+                    "subsequent_notes": {
+                        "description": "Notas posteriores a la realización de la tarea.",
+                        "type": "string"
+                    },
+                    "summary_file": {
+                        "description": "Archivo de resumen de la tarea (PDF, máximo 10MB).",
+                        "type": "string",
+                        "format": "binary"
+                    }
+                },
+                "type": "object"
+            },
+            "ModifyClientRequest": {
+                "title": "Modify Client Request",
+                "description": "Request para modificar un cliente existente.",
+                "required": [
+                    "cif",
+                    "name",
+                    "phone",
+                    "email",
+                    "monthly_fee"
+                ],
+                "properties": {
+                    "cif": {
+                        "description": "CIF del cliente.",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "Nombre del cliente.",
+                        "type": "string"
+                    },
+                    "phone": {
+                        "description": "Teléfono del cliente (9 dígitos).",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Correo electrónico del cliente.",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "bank_account": {
+                        "description": "Cuenta bancaria del cliente (opcional).",
+                        "type": "string"
+                    },
+                    "country": {
+                        "description": "País del cliente (opcional).",
+                        "type": "string"
+                    },
+                    "currency": {
+                        "description": "Moneda del cliente (opcional).",
+                        "type": "string"
+                    },
+                    "monthly_fee": {
+                        "description": "Cuota mensual del cliente.",
+                        "type": "number",
+                        "format": "float"
+                    }
+                },
+                "type": "object"
+            },
+            "ModifyFeeRequest": {
+                "title": "Modify Fee Request",
+                "description": "Request para modificar una cuota existente.",
+                "required": [
+                    "cif",
+                    "concept",
+                    "amount",
+                    "notes"
+                ],
+                "properties": {
+                    "cif": {
+                        "description": "CIF del cliente.",
+                        "type": "string"
+                    },
+                    "concept": {
+                        "description": "Concepto de la cuota.",
+                        "type": "string"
+                    },
+                    "amount": {
+                        "description": "Monto de la cuota.",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "notes": {
+                        "description": "Notas adicionales.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ModifyOperUserRequest": {
+                "title": "Modify Oper User Request",
+                "description": "Request para modificar un usuario operativo existente.",
+                "required": [
+                    "name",
+                    "email",
+                    "dni",
+                    "type"
+                ],
+                "properties": {
+                    "name": {
+                        "description": "Nombre del usuario.",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Correo electrónico del usuario.",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "description": "Contraseña del usuario (opcional).",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    "dni": {
+                        "description": "DNI del usuario.",
+                        "type": "string"
+                    },
+                    "phone": {
+                        "description": "Teléfono del usuario (opcional).",
+                        "type": "string"
+                    },
+                    "address": {
+                        "description": "Dirección del usuario (opcional).",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "Tipo de usuario (oper, admin, client).",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ModifyTaskRequest": {
+                "title": "Modify Task Request",
+                "description": "Request para modificar una tarea existente.",
+                "required": [
+                    "client",
+                    "contact_person",
+                    "contact_email",
+                    "contact_phone",
+                    "description",
+                    "address",
+                    "city",
+                    "postal_code",
+                    "province",
+                    "assigned_operator",
+                    "status"
+                ],
+                "properties": {
+                    "client": {
+                        "description": "Nombre del cliente.",
+                        "type": "string"
+                    },
+                    "contact_person": {
+                        "description": "Persona de contacto.",
+                        "type": "string"
+                    },
+                    "contact_email": {
+                        "description": "Correo electrónico de contacto.",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "contact_phone": {
+                        "description": "Teléfono de contacto (9 dígitos).",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Descripción de la tarea.",
+                        "type": "string"
+                    },
+                    "address": {
+                        "description": "Dirección.",
+                        "type": "string"
+                    },
+                    "city": {
+                        "description": "Ciudad.",
+                        "type": "string"
+                    },
+                    "postal_code": {
+                        "description": "Código postal (5 dígitos).",
+                        "type": "string"
+                    },
+                    "province": {
+                        "description": "Provincia.",
+                        "type": "string"
+                    },
+                    "assigned_operator": {
+                        "description": "ID del operador asignado.",
+                        "type": "integer"
+                    },
+                    "status": {
+                        "description": "Estado de la tarea (P, E, R, C, X).",
+                        "type": "string"
+                    },
+                    "realization_date": {
+                        "description": "Fecha de realización (opcional).",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "previous_notes": {
+                        "description": "Notas previas (opcional).",
+                        "type": "string"
+                    },
+                    "subsequent_notes": {
+                        "description": "Notas posteriores (opcional).",
+                        "type": "string"
+                    },
+                    "summary_file": {
+                        "description": "Archivo de resumen (PDF, máximo 10MB, opcional).",
+                        "type": "string",
+                        "format": "binary"
+                    }
+                },
+                "type": "object"
+            },
+            "NewTaskClientRequest": {
+                "title": "New Task Client Request",
+                "description": "Request para crear una nueva tarea por un cliente.",
+                "required": [
+                    "cif",
+                    "contact_person",
+                    "contact_phone",
+                    "description",
+                    "contact_email",
+                    "address",
+                    "city",
+                    "postal_code",
+                    "province"
+                ],
+                "properties": {
+                    "cif": {
+                        "description": "CIF del cliente.",
+                        "type": "string"
+                    },
+                    "contact_person": {
+                        "description": "Persona de contacto.",
+                        "type": "string"
+                    },
+                    "contact_phone": {
+                        "description": "Teléfono de contacto (9 dígitos).",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Descripción de la tarea.",
+                        "type": "string"
+                    },
+                    "contact_email": {
+                        "description": "Correo electrónico de contacto.",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "address": {
+                        "description": "Dirección.",
+                        "type": "string"
+                    },
+                    "city": {
+                        "description": "Ciudad.",
+                        "type": "string"
+                    },
+                    "postal_code": {
+                        "description": "Código postal (5 dígitos).",
+                        "type": "string"
+                    },
+                    "province": {
+                        "description": "Código de la provincia.",
+                        "type": "string"
+                    },
+                    "previous_notes": {
+                        "description": "Notas previas (opcional).",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ProfileUpdateRequest": {
+                "title": "Profile Update Request",
+                "description": "Request para actualizar el perfil del usuario.",
+                "required": [
+                    "name",
+                    "email"
+                ],
+                "properties": {
+                    "name": {
+                        "description": "Nombre del usuario.",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Correo electrónico del usuario.",
+                        "type": "string",
+                        "format": "email"
+                    }
+                },
+                "type": "object"
+            },
+            "StoreClientRequest": {
+                "title": "Store Client Request",
+                "description": "Request para almacenar un nuevo cliente.",
+                "required": [
+                    "cif",
+                    "name",
+                    "phone",
+                    "email",
+                    "bank_account",
+                    "country",
+                    "monthly_fee"
+                ],
+                "properties": {
+                    "cif": {
+                        "description": "CIF del cliente.",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "Nombre del cliente.",
+                        "type": "string"
+                    },
+                    "phone": {
+                        "description": "Teléfono del cliente (9 dígitos).",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Correo electrónico del cliente.",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "bank_account": {
+                        "description": "Cuenta bancaria del cliente.",
+                        "type": "string"
+                    },
+                    "country": {
+                        "description": "País del cliente.",
+                        "type": "string"
+                    },
+                    "currency": {
+                        "description": "Moneda del cliente (opcional).",
+                        "type": "string"
+                    },
+                    "monthly_fee": {
+                        "description": "Cuota mensual del cliente.",
+                        "type": "number",
+                        "format": "float"
+                    }
+                },
+                "type": "object"
+            },
+            "StoreNewExtraordinaryFeeRequest": {
+                "title": "Store New Extraordinary Fee Request",
+                "description": "Request para almacenar una nueva cuota extraordinaria.",
+                "required": [
+                    "cif",
+                    "concept",
+                    "amount",
+                    "notes"
+                ],
+                "properties": {
+                    "cif": {
+                        "description": "CIF del cliente.",
+                        "type": "string"
+                    },
+                    "concept": {
+                        "description": "Concepto de la cuota extraordinaria.",
+                        "type": "string"
+                    },
+                    "amount": {
+                        "description": "Monto de la cuota extraordinaria.",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "notes": {
+                        "description": "Notas adicionales.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "StoreOperUserRequest": {
+                "title": "Store Oper User Request",
+                "description": "Request para almacenar un nuevo usuario operativo.",
+                "required": [
+                    "name",
+                    "email",
+                    "password",
+                    "dni",
+                    "phone",
+                    "address",
+                    "type"
+                ],
+                "properties": {
+                    "name": {
+                        "description": "Nombre del usuario.",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Correo electrónico del usuario.",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "description": "Contraseña del usuario.",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    "dni": {
+                        "description": "DNI del usuario.",
+                        "type": "string"
+                    },
+                    "phone": {
+                        "description": "Teléfono del usuario.",
+                        "type": "string"
+                    },
+                    "address": {
+                        "description": "Dirección del usuario.",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "Tipo de usuario (oper).",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "StoreTaskRequest": {
+                "title": "Store Task Request",
+                "description": "Request para almacenar una nueva tarea.",
+                "required": [
+                    "client",
+                    "contact_person",
+                    "description",
+                    "contact_phone",
+                    "province",
+                    "contact_email",
+                    "status",
+                    "address",
+                    "city",
+                    "assigned_operator",
+                    "previous_notes"
+                ],
+                "properties": {
+                    "client": {
+                        "description": "Nombre del cliente.",
+                        "type": "string"
+                    },
+                    "contact_person": {
+                        "description": "Persona de contacto.",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Descripción de la tarea.",
+                        "type": "string"
+                    },
+                    "contact_phone": {
+                        "description": "Teléfono de contacto (9 dígitos).",
+                        "type": "string"
+                    },
+                    "postal_code": {
+                        "description": "Código postal (5 dígitos, opcional).",
+                        "type": "string"
+                    },
+                    "province": {
+                        "description": "Código de la provincia.",
+                        "type": "string"
+                    },
+                    "contact_email": {
+                        "description": "Correo electrónico de contacto.",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "status": {
+                        "description": "Estado de la tarea.",
+                        "type": "string"
+                    },
+                    "address": {
+                        "description": "Dirección.",
+                        "type": "string"
+                    },
+                    "city": {
+                        "description": "Ciudad.",
+                        "type": "string"
+                    },
+                    "assigned_operator": {
+                        "description": "ID del operador asignado.",
+                        "type": "integer"
+                    },
+                    "previous_notes": {
+                        "description": "Notas previas (opcional).",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Client": {
+                "title": "Client",
+                "description": "Modelo de cliente.",
+                "properties": {
+                    "id": {
+                        "description": "ID del cliente.",
+                        "type": "integer"
+                    },
+                    "cif": {
+                        "description": "CIF del cliente.",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "Nombre del cliente.",
+                        "type": "string"
+                    },
+                    "phone": {
+                        "description": "Teléfono del cliente.",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Correo electrónico del cliente.",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "bank_account": {
+                        "description": "Cuenta bancaria del cliente.",
+                        "type": "string"
+                    },
+                    "country": {
+                        "description": "País del cliente.",
+                        "type": "string"
+                    },
+                    "currency": {
+                        "description": "Moneda del cliente.",
+                        "type": "string"
+                    },
+                    "monthly_fee": {
+                        "description": "Cuota mensual del cliente.",
+                        "type": "number",
+                        "format": "decimal"
+                    }
+                },
+                "type": "object"
+            },
+            "Fee": {
+                "title": "Fee",
+                "description": "Modelo de cuota.",
+                "properties": {
+                    "id": {
+                        "description": "ID de la cuota.",
+                        "type": "integer"
+                    },
+                    "cif": {
+                        "description": "CIF del cliente.",
+                        "type": "string"
+                    },
+                    "concept": {
+                        "description": "Concepto de la cuota.",
+                        "type": "string"
+                    },
+                    "issue_date": {
+                        "description": "Fecha de emisión de la cuota.",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "amount": {
+                        "description": "Importe de la cuota.",
+                        "type": "number",
+                        "format": "decimal"
+                    },
+                    "passed": {
+                        "description": "Indica si la cuota ha sido pasada.",
+                        "type": "boolean"
+                    },
+                    "payment_date": {
+                        "description": "Fecha de pago de la cuota.",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "notes": {
+                        "description": "Notas adicionales sobre la cuota.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Province": {
+                "title": "Province",
+                "description": "Modelo de provincia.",
+                "properties": {
+                    "cod": {
+                        "description": "Código de la provincia.",
+                        "type": "integer"
+                    },
+                    "nombre": {
+                        "description": "Nombre de la provincia.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Task": {
+                "title": "Task",
+                "description": "Modelo de tarea.",
+                "properties": {
+                    "id": {
+                        "description": "ID de la tarea.",
+                        "type": "integer"
+                    },
+                    "client": {
+                        "description": "Nombre del cliente.",
+                        "type": "string"
+                    },
+                    "contact_person": {
+                        "description": "Persona de contacto.",
+                        "type": "string"
+                    },
+                    "contact_email": {
+                        "description": "Email de contacto.",
+                        "type": "string"
+                    },
+                    "contact_phone": {
+                        "description": "Teléfono de contacto.",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Descripción de la tarea.",
+                        "type": "string"
+                    },
+                    "address": {
+                        "description": "Dirección.",
+                        "type": "string"
+                    },
+                    "city": {
+                        "description": "Ciudad.",
+                        "type": "string"
+                    },
+                    "postal_code": {
+                        "description": "Código postal.",
+                        "type": "string"
+                    },
+                    "province": {
+                        "description": "ID de la provincia.",
+                        "type": "integer"
+                    },
+                    "assigned_operator": {
+                        "description": "ID del operador asignado.",
+                        "type": "integer"
+                    },
+                    "status": {
+                        "description": "Estado de la tarea.",
+                        "type": "string"
+                    },
+                    "realization_date": {
+                        "description": "Fecha de realización.",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "previous_notes": {
+                        "description": "Notas previas.",
+                        "type": "string"
+                    },
+                    "subsequent_notes": {
+                        "description": "Notas posteriores.",
+                        "type": "string"
+                    },
+                    "summary_file": {
+                        "description": "Ruta del archivo de resumen.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "title": "User",
+                "description": "Modelo de usuario.",
+                "properties": {
+                    "id": {
+                        "description": "ID del usuario.",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Nombre del usuario.",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Correo electrónico del usuario.",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "dni": {
+                        "description": "DNI del usuario.",
+                        "type": "string"
+                    },
+                    "phone": {
+                        "description": "Teléfono del usuario.",
+                        "type": "string"
+                    },
+                    "address": {
+                        "description": "Dirección del usuario.",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "Tipo de usuario (admin, oper).",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "description": "Fecha de creación del usuario.",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Fees",
+            "description": "Operaciones relacionadas con cuotas y facturas."
+        },
+        {
+            "name": "Operational Users",
+            "description": "Operaciones relacionadas con usuarios operativos."
+        },
+        {
+            "name": "Provinces",
+            "description": "Operaciones relacionadas con provincias."
+        },
+        {
+            "name": "Clients",
+            "description": "Clients"
+        },
+        {
+            "name": "Tareas",
+            "description": "Tareas"
+        }
+    ]
+}

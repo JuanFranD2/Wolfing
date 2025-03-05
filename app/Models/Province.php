@@ -4,13 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OpenApi\Annotations as OA;
 
 /**
- * Province model class.
- *
- * This class represents a province entity and provides methods to interact with 
- * the `provinces` table in the database. It includes fields like `cod` and `nombre`, 
- * which represent the province code and name, respectively.
+ * @OA\Schema(
+ * schema="Province",
+ * title="Province",
+ * description="Modelo de provincia.",
+ * @OA\Property(property="cod", type="integer", description="Código de la provincia."),
+ * @OA\Property(property="nombre", type="string", description="Nombre de la provincia.")
+ * )
  */
 class Province extends Model
 {
@@ -18,18 +21,8 @@ class Province extends Model
 
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * This property defines the attributes that can be mass assigned (i.e., 
-     * those that can be filled directly via array input). It helps prevent mass 
-     * assignment vulnerabilities by specifying which attributes are allowed to be 
-     * assigned.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
-        'cod',    // Province code
-        'nombre', // Province name
+        'cod',      // Province code
+        'nombre',   // Province name
     ];
 }

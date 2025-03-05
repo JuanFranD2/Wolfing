@@ -18,11 +18,19 @@ use Illuminate\Support\Facades\Storage;
 class ClientController extends Controller
 {
     /**
-     * Display a listing of the clients.
-     *
-     * This method retrieves all clients with pagination and displays them.
-     *
-     * @return \Illuminate\View\View
+     * @OA\Get(
+     * path="/clients",
+     * summary="Lista todos los clientes",
+     * tags={"Clients"},
+     * @OA\Response(
+     * response=200,
+     * description="Lista de clientes.",
+     * @OA\JsonContent(
+     * type="array",
+     * @OA\Items(ref="#/components/schemas/Client")
+     * )
+     * )
+     * )
      */
     public function index()
     {
@@ -32,12 +40,23 @@ class ClientController extends Controller
     }
 
     /**
-     * Display the specified client.
-     *
-     * This method retrieves a client by their ID and displays the details.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
+     * @OA\Get(
+     * path="/clients/{id}",
+     * summary="Muestra los detalles de un cliente",
+     * tags={"Clients"},
+     * @OA\Parameter(
+     * name="id",
+     * in="path",
+     * required=true,
+     * description="ID del cliente.",
+     * @OA\Schema(type="integer")
+     * ),
+     * @OA\Response(
+     * response=200,
+     * description="Detalles del cliente.",
+     * @OA\JsonContent(ref="#/components/schemas/Client")
+     * )
+     * )
      */
     public function show($id)
     {
@@ -46,9 +65,15 @@ class ClientController extends Controller
     }
 
     /**
-     * Show the form to create a new client.
-     *
-     * @return \Illuminate\View\View
+     * @OA\Get(
+     * path="/clients/create",
+     * summary="Muestra el formulario para crear un nuevo cliente",
+     * tags={"Clients"},
+     * @OA\Response(
+     * response=200,
+     * description="Formulario de creación de cliente."
+     * )
+     * )
      */
     public function create()
     {
@@ -56,13 +81,19 @@ class ClientController extends Controller
     }
 
     /**
-     * Store a newly created client in the database.
-     *
-     * This method validates the request data, creates a new client, 
-     * generates a monthly fee for the client, and redirects with a success message.
-     *
-     * @param  \App\Http\Requests\StoreClientRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @OA\Post(
+     * path="/clients",
+     * summary="Almacena un nuevo cliente",
+     * tags={"Clients"},
+     * @OA\RequestBody(
+     * required=true,
+     * @OA\JsonContent(ref="#/components/schemas/StoreClientRequest")
+     * ),
+     * @OA\Response(
+     * response=302,
+     * description="Redirecciona a la lista de clientes con mensaje de éxito."
+     * )
+     * )
      */
     public function store(StoreClientRequest $request)
     {
@@ -77,13 +108,22 @@ class ClientController extends Controller
     }
 
     /**
-     * Send the fee invoice to the client via email.
-     *
-     * This method generates a PDF invoice for the provided fee and sends it 
-     * to the client's email address.
-     *
-     * @param  \App\Models\Fee  $fee
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Post(
+     * path="/clients/send-invoice/{id}",
+     * summary="Envía la factura de una cuota por correo electrónico",
+     * tags={"Clients"},
+     * @OA\Parameter(
+     * name="id",
+     * in="path",
+     * required=true,
+     * description="ID de la cuota.",
+     * @OA\Schema(type="integer")
+     * ),
+     * @OA\Response(
+     * response=200,
+     * description="Factura enviada correctamente."
+     * )
+     * )
      */
     public function sendFeeInvoice(Fee $fee)
     {
@@ -139,10 +179,22 @@ class ClientController extends Controller
     }
 
     /**
-     * Show the form to edit the specified client.
-     *
-     * @param  \App\Models\Client  $client
-     * @return \Illuminate\View\View
+     * @OA\Get(
+     * path="/clients/{client}/edit",
+     * summary="Muestra el formulario para editar un cliente",
+     * tags={"Clients"},
+     * @OA\Parameter(
+     * name="client",
+     * in="path",
+     * required=true,
+     * description="ID del cliente a editar.",
+     * @OA\Schema(type="integer")
+     * ),
+     * @OA\Response(
+     * response=200,
+     * description="Formulario de edición de cliente."
+     * )
+     * )
      */
     public function edit(Client $client)
     {
@@ -151,13 +203,26 @@ class ClientController extends Controller
     }
 
     /**
-     * Update the specified client in the database.
-     *
-     * This method validates the request data and updates the client's information.
-     *
-     * @param  \App\Http\Requests\ModifyClientRequest  $request
-     * @param  \App\Models\Client  $client
-     * @return \Illuminate\Http\RedirectResponse
+     * @OA\Put(
+     * path="/clients/{client}",
+     * summary="Actualiza un cliente existente",
+     * tags={"Clients"},
+     * @OA\Parameter(
+     * name="client",
+     * in="path",
+     * required=true,
+     * description="ID del cliente a actualizar.",
+     * @OA\Schema(type="integer")
+     * ),
+     * @OA\RequestBody(
+     * required=true,
+     * @OA\JsonContent(ref="#/components/schemas/ModifyClientRequest")
+     * ),
+     * @OA\Response(
+     * response=302,
+     * description="Redirecciona a la lista de clientes con mensaje de éxito."
+     * )
+     * )
      */
     public function update(ModifyClientRequest $request, Client $client)
     {
@@ -168,10 +233,22 @@ class ClientController extends Controller
     }
 
     /**
-     * Remove the specified client from the database.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @OA\Delete(
+     * path="/clients/{id}",
+     * summary="Elimina un cliente",
+     * tags={"Clients"},
+     * @OA\Parameter(
+     * name="id",
+     * in="path",
+     * required=true,
+     * description="ID del cliente a eliminar.",
+     * @OA\Schema(type="integer")
+     * ),
+     * @OA\Response(
+     * response=302,
+     * description="Redirecciona a la lista de clientes."
+     * )
+     * )
      */
     public function destroy($id)
     {

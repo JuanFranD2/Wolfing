@@ -15,20 +15,42 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Controller for managing tasks in the application.
- *
- * This controller provides methods for displaying, creating, updating, completing, 
- * and deleting tasks based on user roles (admin, oper, client).
+ * @OA\Info(
+ * title="Task API",
+ * version="1.0.0",
+ * description="API para gestionar tareas."
+ * )
  */
 class TaskController extends Controller
 {
+
     /**
-     * Display a listing of the tasks.
+     * Lista de tareas.
      *
-     * This method retrieves tasks based on the user's role (admin, oper) 
-     * and the task status, displaying them accordingly.
-     *
-     * @param  \Illuminate\Http\Request  $request
+     * @OA\Get(
+     * path="/api/tasks",
+     * summary="Obtiene una lista de tareas.",
+     * tags={"Tareas"},
+     * @OA\Parameter(
+     * name="status",
+     * in="query",
+     * description="Filtrar por estado (all, P, E, C).",
+     * required=false,
+     * @OA\Schema(type="string")
+     * ),
+     * @OA\Response(
+     * response=200,
+     * description="Lista de tareas obtenida exitosamente.",
+     * @OA\JsonContent(
+     * type="array",
+     * @OA\Items(ref="#/components/schemas/Task")
+     * )
+     * ),
+     * @OA\Response(
+     * response=401,
+     * description="No autorizado."
+     * )
+     * )
      */
     public function index(Request $request)
     {
@@ -59,12 +81,29 @@ class TaskController extends Controller
     }
 
     /**
-     * Display the specified task.
+     * Mostrar detalles de una tarea específica.
      *
-     * This method retrieves a specific task by ID along with its associated province and operator.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
+     * @OA\Get(
+     * path="/api/tasks/{id}",
+     * summary="Obtiene los detalles de una tarea específica.",
+     * tags={"Tareas"},
+     * @OA\Parameter(
+     * name="id",
+     * in="path",
+     * description="ID de la tarea.",
+     * required=true,
+     * @OA\Schema(type="integer")
+     * ),
+     * @OA\Response(
+     * response=200,
+     * description="Detalles de la tarea obtenidos exitosamente.",
+     * @OA\JsonContent(ref="#/components/schemas/Task")
+     * ),
+     * @OA\Response(
+     * response=404,
+     * description="Tarea no encontrada."
+     * )
+     * )
      */
     public function show($id)
     {
@@ -76,12 +115,28 @@ class TaskController extends Controller
     }
 
     /**
-     * Delete the specified task.
+     * Eliminar una tarea específica.
      *
-     * This method deletes a task by its ID and redirects back with a success message.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @OA\Delete(
+     * path="/api/tasks/{id}",
+     * summary="Elimina una tarea específica.",
+     * tags={"Tareas"},
+     * @OA\Parameter(
+     * name="id",
+     * in="path",
+     * description="ID de la tarea a eliminar.",
+     * required=true,
+     * @OA\Schema(type="integer")
+     * ),
+     * @OA\Response(
+     * response=200,
+     * description="Tarea eliminada exitosamente."
+     * ),
+     * @OA\Response(
+     * response=404,
+     * description="Tarea no encontrada."
+     * )
+     * )
      */
     public function destroy($id)
     {
@@ -92,12 +147,28 @@ class TaskController extends Controller
     }
 
     /**
-     * Show the form to complete a task.
+     * Mostrar formulario para completar una tarea.
      *
-     * This method loads the task completion form and the related provinces for the task.
-     *
-     * @param  \App\Models\Task  $task
-     * @return \Illuminate\View\View
+     * @OA\Get(
+     * path="/api/tasks/{id}/complete",
+     * summary="Muestra el formulario para completar una tarea.",
+     * tags={"Tareas"},
+     * @OA\Parameter(
+     * name="id",
+     * in="path",
+     * description="ID de la tarea a completar.",
+     * required=true,
+     * @OA\Schema(type="integer")
+     * ),
+     * @OA\Response(
+     * response=200,
+     * description="Formulario para completar la tarea mostrado exitosamente."
+     * ),
+     * @OA\Response(
+     * response=404,
+     * description="Tarea no encontrada."
+     * )
+     * )
      */
     public function showCompleteTask(Task $task)
     {
@@ -109,13 +180,32 @@ class TaskController extends Controller
     }
 
     /**
-     * Complete a task.
+     * Completar una tarea.
      *
-     * This method updates the task status, uploads the summary file, and saves the changes.
-     *
-     * @param  \App\Http\Requests\CompleteTaskRequest  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @OA\Post(
+     * path="/api/tasks/{id}/complete",
+     * summary="Completa una tarea específica.",
+     * tags={"Tareas"},
+     * @OA\Parameter(
+     * name="id",
+     * in="path",
+     * description="ID de la tarea a completar.",
+     * required=true,
+     * @OA\Schema(type="integer")
+     * ),
+     * @OA\RequestBody(
+     * required=true,
+     * @OA\JsonContent(ref="#/components/schemas/CompleteTaskRequest")
+     * ),
+     * @OA\Response(
+     * response=200,
+     * description="Tarea completada exitosamente."
+     * ),
+     * @OA\Response(
+     * response=404,
+     * description="Tarea no encontrada."
+     * )
+     * )
      */
     public function completeTask(CompleteTaskRequest $request, $id)
     {
@@ -154,10 +244,17 @@ class TaskController extends Controller
     }
 
     /**
-     * Show the form for creating a new task.
+     * Mostrar formulario para crear una nueva tarea.
      *
-     * This method shows the task creation form based on the user's role (admin, client).
-     *
+     * @OA\Get(
+     * path="/api/tasks/create",
+     * summary="Muestra el formulario para crear una nueva tarea.",
+     * tags={"Tareas"},
+     * @OA\Response(
+     * response=200,
+     * description="Formulario para crear la tarea mostrado exitosamente."
+     * )
+     * )
      */
     public function create()
     {
@@ -167,6 +264,19 @@ class TaskController extends Controller
         return view('tasks.newTaskAdmin', compact('provinces', 'operators'));
     }
 
+    /**
+     * Mostrar formulario para crear una nueva tarea para un cliente.
+     *
+     * @OA\Get(
+     * path="/api/tasks/create/client",
+     * summary="Muestra el formulario para crear una nueva tarea para un cliente.",
+     * tags={"Tareas"},
+     * @OA\Response(
+     * response=200,
+     * description="Formulario para crear la tarea para el cliente mostrado exitosamente."
+     * )
+     * )
+     */
     public function createClient()
     {
         $provinces = Province::all();
@@ -177,12 +287,28 @@ class TaskController extends Controller
 
 
     /**
-     * Show the form for editing an existing task.
+     * Mostrar formulario para editar una tarea existente.
      *
-     * This method retrieves the task and necessary data for editing.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
+     * @OA\Get(
+     * path="/api/tasks/{id}/edit",
+     * summary="Muestra el formulario para editar una tarea existente.",
+     * tags={"Tareas"},
+     * @OA\Parameter(
+     * name="id",
+     * in="path",
+     * description="ID de la tarea a editar.",
+     * required=true,
+     * @OA\Schema(type="integer")
+     * ),
+     * @OA\Response(
+     * response=200,
+     * description="Formulario para editar la tarea mostrado exitosamente."
+     * ),
+     * @OA\Response(
+     * response=404,
+     * description="Tarea no encontrada."
+     * )
+     * )
      */
     public function edit($id)
     {
@@ -194,12 +320,25 @@ class TaskController extends Controller
     }
 
     /**
-     * Store a newly created task in storage.
+     * Almacenar una nueva tarea en el almacenamiento.
      *
-     * This method stores a new task in the database using validated data from the request.
-     *
-     * @param  \App\Http\Requests\StoreTaskRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @OA\Post(
+     * path="/api/tasks",
+     * summary="Almacena una nueva tarea.",
+     * tags={"Tareas"},
+     * @OA\RequestBody(
+     * required=true,
+     * @OA\JsonContent(ref="#/components/schemas/StoreTaskRequest")
+     * ),
+     * @OA\Response(
+     * response=201,
+     * description="Tarea creada exitosamente."
+     * ),
+     * @OA\Response(
+     * response=422,
+     * description="Datos de entrada no válidos."
+     * )
+     * )
      */
     public function store(StoreTaskRequest $request)
     {
@@ -209,13 +348,36 @@ class TaskController extends Controller
     }
 
     /**
-     * Update the specified task in storage.
+     * Actualizar una tarea específica en el almacenamiento.
      *
-     * This method updates the task with the given ID using validated data and file handling.
-     *
-     * @param  \App\Http\Requests\ModifyTaskRequest  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @OA\Put(
+     * path="/api/tasks/{id}",
+     * summary="Actualiza una tarea específica.",
+     * tags={"Tareas"},
+     * @OA\Parameter(
+     * name="id",
+     * in="path",
+     * description="ID de la tarea a actualizar.",
+     * required=true,
+     * @OA\Schema(type="integer")
+     * ),
+     * @OA\RequestBody(
+     * required=true,
+     * @OA\JsonContent(ref="#/components/schemas/ModifyTaskRequest")
+     * ),
+     * @OA\Response(
+     * response=200,
+     * description="Tarea actualizada exitosamente."
+     * ),
+     * @OA\Response(
+     * response=404,
+     * description="Tarea no encontrada."
+     * ),
+     * @OA\Response(
+     * response=422,
+     * description="Datos de entrada no válidos."
+     * )
+     * )
      */
     public function update(ModifyTaskRequest $request, $id)
     {
@@ -249,14 +411,27 @@ class TaskController extends Controller
 
         return redirect()->route('tasks.index')->with('success', 'Task updated successfully.');
     }
-
+    
     /**
-     * Store a newly created task for the client.
+     * Almacenar una nueva tarea para el cliente.
      *
-     * This method stores a task created by a client with validated data.
-     *
-     * @param  \App\Http\Requests\NewTaskClientRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @OA\Post(
+     * path="/api/tasks/client",
+     * summary="Almacena una nueva tarea creada por un cliente.",
+     * tags={"Tareas"},
+     * @OA\RequestBody(
+     * required=true,
+     * @OA\JsonContent(ref="#/components/schemas/NewTaskClientRequest")
+     * ),
+     * @OA\Response(
+     * response=201,
+     * description="Tarea creada por el cliente exitosamente."
+     * ),
+     * @OA\Response(
+     * response=422,
+     * description="Datos de entrada no válidos."
+     * )
+     * )
      */
     public function storeClientTask(NewTaskClientRequest $request)
     {

@@ -5,11 +5,18 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Request class to validate modifications to a fee.
- *
- * This request handles the validation logic when modifying a fee,
- * including fields such as CIF, concept, amount, and notes.
+ * @OA\Schema(
+ * schema="ModifyFeeRequest",
+ * title="Modify Fee Request",
+ * description="Request para modificar una cuota existente.",
+ * required={"cif", "concept", "amount", "notes"},
+ * @OA\Property(property="cif", type="string", description="CIF del cliente."),
+ * @OA\Property(property="concept", type="string", description="Concepto de la cuota."),
+ * @OA\Property(property="amount", type="number", format="float", description="Monto de la cuota."),
+ * @OA\Property(property="notes", type="string", description="Notas adicionales.")
+ * )
  */
+
 class ModifyFeeRequest extends FormRequest
 {
     /**

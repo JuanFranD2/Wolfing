@@ -5,11 +5,20 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Request class to validate storing a new client.
- *
- * This request handles the validation logic when creating a new client,
- * including fields such as CIF, name, phone, email, bank account, country, 
- * currency, and monthly fee.
+ * @OA\Schema(
+ * schema="StoreClientRequest",
+ * title="Store Client Request",
+ * description="Request para almacenar un nuevo cliente.",
+ * required={"cif", "name", "phone", "email", "bank_account", "country", "monthly_fee"},
+ * @OA\Property(property="cif", type="string", description="CIF del cliente."),
+ * @OA\Property(property="name", type="string", description="Nombre del cliente."),
+ * @OA\Property(property="phone", type="string", description="Teléfono del cliente (9 dígitos)."),
+ * @OA\Property(property="email", type="string", format="email", description="Correo electrónico del cliente."),
+ * @OA\Property(property="bank_account", type="string", description="Cuenta bancaria del cliente."),
+ * @OA\Property(property="country", type="string", description="País del cliente."),
+ * @OA\Property(property="currency", type="string", description="Moneda del cliente (opcional)."),
+ * @OA\Property(property="monthly_fee", type="number", format="float", description="Cuota mensual del cliente.")
+ * )
  */
 class StoreClientRequest extends FormRequest
 {

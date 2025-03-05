@@ -12,16 +12,33 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * Controller for managing fees and generating invoices.
+ * @OA\Tag(
+ * name="Fees",
+ * description="Operaciones relacionadas con cuotas y facturas."
+ * )
  */
 class FeeController extends Controller
 {
     /**
-     * Display a listing of the fees.
-     *
-     * This method retrieves and paginates all fees, showing them in the view.
-     *
-     * @return \Illuminate\View\View
+     * @OA\Get(
+     * path="/fees",
+     * summary="Lista todas las cuotas",
+     * tags={"Fees"},
+     * @OA\Parameter(
+     * name="search",
+     * in="query",
+     * description="Buscar cuotas por nombre de cliente.",
+     * @OA\Schema(type="string")
+     * ),
+     * @OA\Response(
+     * response=200,
+     * description="Lista de cuotas.",
+     * @OA\JsonContent(
+     * type="array",
+     * @OA\Items(ref="#/components/schemas/Fee")
+     * )
+     * )
+     * )
      */
     public function index(Request $request)
     {
@@ -39,11 +56,15 @@ class FeeController extends Controller
         return view('fees.showFees', compact('fees'));
     }
     /**
-     * Show the form for creating a new extraordinary fee.
-     *
-     * This method returns the view to create an extraordinary fee.
-     *
-     * @return \Illuminate\View\View
+     * @OA\Get(
+     * path="/fees/create-extraordinary",
+     * summary="Muestra el formulario para crear una nueva cuota extraordinaria",
+     * tags={"Fees"},
+     * @OA\Response(
+     * response=200,
+     * description="Formulario de creación de cuota extraordinaria."
+     * )
+     * )
      */
     public function createExtraordinary()
     {
@@ -51,13 +72,19 @@ class FeeController extends Controller
     }
 
     /**
-     * Store a newly created extraordinary fee in storage.
-     *
-     * This method validates the request data and stores the extraordinary fee.
-     * It then generates and sends an invoice for the created fee.
-     *
-     * @param  \App\Http\Requests\StoreNewExtraordinaryFeeRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @OA\Post(
+     * path="/fees",
+     * summary="Almacena una nueva cuota extraordinaria",
+     * tags={"Fees"},
+     * @OA\RequestBody(
+     * required=true,
+     * @OA\JsonContent(ref="#/components/schemas/StoreNewExtraordinaryFeeRequest")
+     * ),
+     * @OA\Response(
+     * response=302,
+     * description="Redirecciona a la lista de cuotas con mensaje de éxito."
+     * )
+     * )
      */
     public function store(StoreNewExtraordinaryFeeRequest $request)
     {
@@ -79,12 +106,22 @@ class FeeController extends Controller
     }
 
     /**
-     * Send the generated fee invoice to the client via email.
-     *
-     * This method generates a PDF invoice for the fee and sends it to the client's email.
-     *
-     * @param  \App\Models\Fee  $fee
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Post(
+     * path="/fees/{id}/send-invoice",
+     * summary="Envía la factura de una cuota por correo electrónico",
+     * tags={"Fees"},
+     * @OA\Parameter(
+     * name="id",
+     * in="path",
+     * required=true,
+     * description="ID de la cuota.",
+     * @OA\Schema(type="integer")
+     * ),
+     * @OA\Response(
+     * response=200,
+     * description="Factura enviada correctamente."
+     * )
+     * )
      */
     public function sendFeeInvoice(Fee $fee)
     {
@@ -106,12 +143,23 @@ class FeeController extends Controller
     }
 
     /**
-     * Display the details of a specific fee.
-     *
-     * This method retrieves a fee by its ID and passes it to the view for display.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
+     * @OA\Get(
+     * path="/fees/{id}",
+     * summary="Muestra los detalles de una cuota",
+     * tags={"Fees"},
+     * @OA\Parameter(
+     * name="id",
+     * in="path",
+     * required=true,
+     * description="ID de la cuota.",
+     * @OA\Schema(type="integer")
+     * ),
+     * @OA\Response(
+     * response=200,
+     * description="Detalles de la cuota.",
+     * @OA\JsonContent(ref="#/components/schemas/Fee")
+     * )
+     * )
      */
     public function show($id)
     {
@@ -123,12 +171,22 @@ class FeeController extends Controller
     }
 
     /**
-     * Show the form for editing the specified fee.
-     *
-     * This method retrieves a fee by its ID and passes it to the view for editing.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
+     * @OA\Get(
+     * path="/fees/{id}/edit",
+     * summary="Muestra el formulario para editar una cuota",
+     * tags={"Fees"},
+     * @OA\Parameter(
+     * name="id",
+     * in="path",
+     * required=true,
+     * description="ID de la cuota a editar.",
+     * @OA\Schema(type="integer")
+     * ),
+     * @OA\Response(
+     * response=200,
+     * description="Formulario de edición de cuota."
+     * )
+     * )
      */
     public function edit($id)
     {
@@ -177,13 +235,24 @@ class FeeController extends Controller
     }
 
     /**
-     * Remove the specified fee from storage.
-     *
-     * This method deletes the specified fee from the database and returns a success message.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @OA\Delete(
+     * path="/fees/{id}",
+     * summary="Elimina una cuota",
+     * tags={"Fees"},
+     * @OA\Parameter(
+     * name="id",
+     * in="path",
+     * required=true,
+     * description="ID de la cuota a eliminar.",
+     * @OA\Schema(type="integer")
+     * ),
+     * @OA\Response(
+     * response=302,
+     * description="Redirecciona a la lista de cuotas con mensaje de éxito."
+     * )
+     * )
      */
+
     public function destroy(string $id)
     {
         // Buscar la cuota (fee) por su ID

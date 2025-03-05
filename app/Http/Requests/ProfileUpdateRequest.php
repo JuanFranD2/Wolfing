@@ -7,10 +7,14 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 /**
- * Request class to validate profile update.
- *
- * This request handles the validation logic for updating a user's profile, 
- * including the validation of name and email fields.
+ * @OA\Schema(
+ * schema="ProfileUpdateRequest",
+ * title="Profile Update Request",
+ * description="Request para actualizar el perfil del usuario.",
+ * required={"name", "email"},
+ * @OA\Property(property="name", type="string", description="Nombre del usuario."),
+ * @OA\Property(property="email", type="string", format="email", description="Correo electrónico del usuario.")
+ * )
  */
 class ProfileUpdateRequest extends FormRequest
 {

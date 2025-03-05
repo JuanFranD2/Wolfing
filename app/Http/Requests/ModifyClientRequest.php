@@ -5,10 +5,20 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Request class to validate the modification of a client.
- *
- * This request handles the validation logic when modifying a client's information,
- * including fields such as CIF, name, phone, email, bank account, country, currency, and monthly fee.
+ * @OA\Schema(
+ * schema="ModifyClientRequest",
+ * title="Modify Client Request",
+ * description="Request para modificar un cliente existente.",
+ * required={"cif", "name", "phone", "email", "monthly_fee"},
+ * @OA\Property(property="cif", type="string", description="CIF del cliente."),
+ * @OA\Property(property="name", type="string", description="Nombre del cliente."),
+ * @OA\Property(property="phone", type="string", description="Teléfono del cliente (9 dígitos)."),
+ * @OA\Property(property="email", type="string", format="email", description="Correo electrónico del cliente."),
+ * @OA\Property(property="bank_account", type="string", description="Cuenta bancaria del cliente (opcional)."),
+ * @OA\Property(property="country", type="string", description="País del cliente (opcional)."),
+ * @OA\Property(property="currency", type="string", description="Moneda del cliente (opcional)."),
+ * @OA\Property(property="monthly_fee", type="number", format="float", description="Cuota mensual del cliente.")
+ * )
  */
 class ModifyClientRequest extends FormRequest
 {

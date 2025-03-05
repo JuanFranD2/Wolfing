@@ -5,10 +5,15 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Request class to validate the completion of a task.
- *
- * This request handles the validation logic for completing a task,
- * including the status, subsequent notes, and the summary file.
+ * @OA\Schema(
+ * schema="CompleteTaskRequest",
+ * title="Complete Task Request",
+ * description="Request para completar una tarea existente.",
+ * required={"status", "subsequent_notes", "summary_file"},
+ * @OA\Property(property="status", type="string", description="Estado de la tarea (C: Completada, X: Cancelada)."),
+ * @OA\Property(property="subsequent_notes", type="string", description="Notas posteriores a la realización de la tarea."),
+ * @OA\Property(property="summary_file", type="string", format="binary", description="Archivo de resumen de la tarea (PDF, máximo 10MB).")
+ * )
  */
 class CompleteTaskRequest extends FormRequest
 {

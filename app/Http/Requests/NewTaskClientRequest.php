@@ -7,11 +7,22 @@ use App\Models\Client;
 use Illuminate\Validation\Rule;
 
 /**
- * Request class to validate a new task created by a client.
- *
- * This request handles the validation logic when a client creates a new task, 
- * including validating fields such as CIF, contact phone, description, email, 
- * and related client data.
+ * @OA\Schema(
+ * schema="NewTaskClientRequest",
+ * title="New Task Client Request",
+ * description="Request para crear una nueva tarea por un cliente.",
+ * required={"cif", "contact_person", "contact_phone", "description", "contact_email", "address", "city", "postal_code", "province"},
+ * @OA\Property(property="cif", type="string", description="CIF del cliente."),
+ * @OA\Property(property="contact_person", type="string", description="Persona de contacto."),
+ * @OA\Property(property="contact_phone", type="string", description="Teléfono de contacto (9 dígitos)."),
+ * @OA\Property(property="description", type="string", description="Descripción de la tarea."),
+ * @OA\Property(property="contact_email", type="string", format="email", description="Correo electrónico de contacto."),
+ * @OA\Property(property="address", type="string", description="Dirección."),
+ * @OA\Property(property="city", type="string", description="Ciudad."),
+ * @OA\Property(property="postal_code", type="string", description="Código postal (5 dígitos)."),
+ * @OA\Property(property="province", type="string", description="Código de la provincia."),
+ * @OA\Property(property="previous_notes", type="string", description="Notas previas (opcional).")
+ * )
  */
 class NewTaskClientRequest extends FormRequest
 {

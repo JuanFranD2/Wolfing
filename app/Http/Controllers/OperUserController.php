@@ -8,21 +8,27 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Controller for managing operational users in the application.
- *
- * This controller provides methods to create, read, update, and delete
- * operational users. It also manages the display of user lists and 
- * user details.
+ * @OA\Tag(
+ * name="Operational Users",
+ * description="Operaciones relacionadas con usuarios operativos."
+ * )
  */
 class OperUserController extends Controller
 {
     /**
-     * Display a listing of the operational users.
-     *
-     * This method retrieves all users, excluding the currently authenticated user,
-     * and displays them in a paginated list.
-     *
-     * @return \Illuminate\View\View
+     * @OA\Get(
+     * path="/operUsers",
+     * summary="Lista todos los usuarios operativos",
+     * tags={"Operational Users"},
+     * @OA\Response(
+     * response=200,
+     * description="Lista de usuarios operativos.",
+     * @OA\JsonContent(
+     * type="array",
+     * @OA\Items(ref="#/components/schemas/User")
+     * )
+     * )
+     * )
      */
     public function index()
     {
@@ -32,9 +38,15 @@ class OperUserController extends Controller
     }
 
     /**
-     * Show the form for creating a new operational user.
-     *
-     * @return \Illuminate\View\View
+     * @OA\Get(
+     * path="/operUsers/create",
+     * summary="Muestra el formulario para crear un nuevo usuario operativo",
+     * tags={"Operational Users"},
+     * @OA\Response(
+     * response=200,
+     * description="Formulario de creación de usuario operativo."
+     * )
+     * )
      */
     public function create()
     {
@@ -42,12 +54,19 @@ class OperUserController extends Controller
     }
 
     /**
-     * Store a newly created operational user in storage.
-     *
-     * This method validates the request data and creates a new user in the database.
-     *
-     * @param  \App\Http\Requests\StoreOperUserRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @OA\Post(
+     * path="/operUsers",
+     * summary="Almacena un nuevo usuario operativo",
+     * tags={"Operational Users"},
+     * @OA\RequestBody(
+     * required=true,
+     * @OA\JsonContent(ref="#/components/schemas/StoreOperUserRequest")
+     * ),
+     * @OA\Response(
+     * response=302,
+     * description="Redirecciona a la lista de usuarios operativos con mensaje de éxito."
+     * )
+     * )
      */
     public function store(StoreOperUserRequest $request)
     {
@@ -66,12 +85,23 @@ class OperUserController extends Controller
     }
 
     /**
-     * Display the specified operational user.
-     *
-     * This method retrieves the user by their ID and displays the user's details.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
+     * @OA\Get(
+     * path="/operUsers/{id}",
+     * summary="Muestra los detalles de un usuario operativo",
+     * tags={"Operational Users"},
+     * @OA\Parameter(
+     * name="id",
+     * in="path",
+     * required=true,
+     * description="ID del usuario operativo.",
+     * @OA\Schema(type="integer")
+     * ),
+     * @OA\Response(
+     * response=200,
+     * description="Detalles del usuario operativo.",
+     * @OA\JsonContent(ref="#/components/schemas/User")
+     * )
+     * )
      */
     public function show($id)
     {
@@ -80,10 +110,22 @@ class OperUserController extends Controller
     }
 
     /**
-     * Show the form for editing the specified operational user.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\View\View
+     * @OA\Get(
+     * path="/operUsers/{user}/edit",
+     * summary="Muestra el formulario para editar un usuario operativo",
+     * tags={"Operational Users"},
+     * @OA\Parameter(
+     * name="user",
+     * in="path",
+     * required=true,
+     * description="ID del usuario operativo a editar.",
+     * @OA\Schema(type="integer")
+     * ),
+     * @OA\Response(
+     * response=200,
+     * description="Formulario de edición de usuario operativo."
+     * )
+     * )
      */
     public function edit(User $user)
     {
@@ -91,14 +133,26 @@ class OperUserController extends Controller
     }
 
     /**
-     * Update the specified operational user in storage.
-     *
-     * This method validates the request data, updates the user information,
-     * and saves the changes to the database. If a new password is provided, it is encrypted.
-     *
-     * @param  \App\Http\Requests\ModifyOperUserRequest  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @OA\Put(
+     * path="/operUsers/{id}",
+     * summary="Actualiza un usuario operativo existente",
+     * tags={"Operational Users"},
+     * @OA\Parameter(
+     * name="id",
+     * in="path",
+     * required=true,
+     * description="ID del usuario operativo a actualizar.",
+     * @OA\Schema(type="integer")
+     * ),
+     * @OA\RequestBody(
+     * required=true,
+     * @OA\JsonContent(ref="#/components/schemas/ModifyOperUserRequest")
+     * ),
+     * @OA\Response(
+     * response=302,
+     * description="Redirecciona a la lista de usuarios operativos con mensaje de éxito."
+     * )
+     * )
      */
     public function update(ModifyOperUserRequest $request, $id)
     {
@@ -123,12 +177,22 @@ class OperUserController extends Controller
     }
 
     /**
-     * Remove the specified operational user from storage.
-     *
-     * This method deletes the user from the database and returns a success message.
-     *
-     * @param  string  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @OA\Delete(
+     * path="/operUsers/{id}",
+     * summary="Elimina un usuario operativo",
+     * tags={"Operational Users"},
+     * @OA\Parameter(
+     * name="id",
+     * in="path",
+     * required=true,
+     * description="ID del usuario operativo a eliminar.",
+     * @OA\Schema(type="integer")
+     * ),
+     * @OA\Response(
+     * response=302,
+     * description="Redirecciona a la lista de usuarios operativos con mensaje de éxito."
+     * )
+     * )
      */
     public function destroy(string $id)
     {

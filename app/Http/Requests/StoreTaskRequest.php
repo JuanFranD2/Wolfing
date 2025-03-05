@@ -5,11 +5,24 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Request class to validate storing a new task.
- *
- * This request handles the validation logic for creating a new task,
- * including validating fields such as client, contact person, phone number,
- * description, and more.
+ * @OA\Schema(
+ * schema="StoreTaskRequest",
+ * title="Store Task Request",
+ * description="Request para almacenar una nueva tarea.",
+ * required={"client", "contact_person", "description", "contact_phone", "province", "contact_email", "status", "address", "city", "assigned_operator", "previous_notes"},
+ * @OA\Property(property="client", type="string", description="Nombre del cliente."),
+ * @OA\Property(property="contact_person", type="string", description="Persona de contacto."),
+ * @OA\Property(property="description", type="string", description="Descripción de la tarea."),
+ * @OA\Property(property="contact_phone", type="string", description="Teléfono de contacto (9 dígitos)."),
+ * @OA\Property(property="postal_code", type="string", description="Código postal (5 dígitos, opcional)."),
+ * @OA\Property(property="province", type="string", description="Código de la provincia."),
+ * @OA\Property(property="contact_email", type="string", format="email", description="Correo electrónico de contacto."),
+ * @OA\Property(property="status", type="string", description="Estado de la tarea."),
+ * @OA\Property(property="address", type="string", description="Dirección."),
+ * @OA\Property(property="city", type="string", description="Ciudad."),
+ * @OA\Property(property="assigned_operator", type="integer", description="ID del operador asignado."),
+ * @OA\Property(property="previous_notes", type="string", description="Notas previas (opcional).")
+ * )
  */
 class StoreTaskRequest extends FormRequest
 {

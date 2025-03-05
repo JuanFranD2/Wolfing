@@ -4,38 +4,29 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OpenApi\Annotations as OA;
 
 /**
- * Fee model class.
- *
- * This class represents a fee entity and provides methods to interact with 
- * the `fees` table in the database. It includes fields like CIF, concept, 
- * issue date, amount, passed status, payment date, and notes. 
- * The `client` relationship links the fee to a client via the CIF field.
+ * @OA\Schema(
+ * schema="Fee",
+ * title="Fee",
+ * description="Modelo de cuota.",
+ * @OA\Property(property="id", type="integer", description="ID de la cuota."),
+ * @OA\Property(property="cif", type="string", description="CIF del cliente."),
+ * @OA\Property(property="concept", type="string", description="Concepto de la cuota."),
+ * @OA\Property(property="issue_date", type="string", format="date", description="Fecha de emisión de la cuota."),
+ * @OA\Property(property="amount", type="number", format="decimal", description="Importe de la cuota."),
+ * @OA\Property(property="passed", type="boolean", description="Indica si la cuota ha sido pasada."),
+ * @OA\Property(property="payment_date", type="string", format="date", description="Fecha de pago de la cuota."),
+ * @OA\Property(property="notes", type="string", description="Notas adicionales sobre la cuota.")
+ * )
  */
 class Fee extends Model
 {
     use HasFactory;
 
-    /**
-     * The table associated with the model.
-     *
-     * This property defines the name of the database table associated with the model.
-     *
-     * @var string
-     */
     protected $table = 'fees';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * This property defines the attributes that can be mass assigned (i.e., 
-     * those that can be filled directly via array input). It helps prevent mass 
-     * assignment vulnerabilities by specifying which attributes are allowed to be 
-     * assigned.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'cif',
         'concept',
@@ -46,30 +37,12 @@ class Fee extends Model
         'notes',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * This property defines the types to which certain attributes should be cast. 
-     * For example, the `issue_date` and `payment_date` are cast to dates, 
-     * and the `amount` is cast to a decimal with 2 decimal places.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
-        'issue_date' => 'date', // Casts the issue_date to a date
-        'payment_date' => 'date', // Casts the payment_date to a date
-        'amount' => 'decimal:2', // Casts the amount to a decimal with 2 decimal places
+        'issue_date' => 'date',
+        'payment_date' => 'date',
+        'amount' => 'decimal:2',
     ];
 
-    /**
-     * Define the relationship with the Client model.
-     *
-     * This method defines the inverse of the relationship between a fee and a client, 
-     * where a fee belongs to a client. The relationship is based on the CIF field 
-     * in both the `fees` and `clients` tables.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function client()
     {
         return $this->belongsTo(Client::class, 'cif', 'cif');

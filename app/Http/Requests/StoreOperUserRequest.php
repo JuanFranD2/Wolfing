@@ -5,10 +5,19 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Request class to validate storing an operational user.
- *
- * This request handles the validation logic for creating a new operational user,
- * including fields such as name, email, password, DNI, phone, address, and type.
+ * @OA\Schema(
+ * schema="StoreOperUserRequest",
+ * title="Store Oper User Request",
+ * description="Request para almacenar un nuevo usuario operativo.",
+ * required={"name", "email", "password", "dni", "phone", "address", "type"},
+ * @OA\Property(property="name", type="string", description="Nombre del usuario."),
+ * @OA\Property(property="email", type="string", format="email", description="Correo electrónico del usuario."),
+ * @OA\Property(property="password", type="string", format="password", description="Contraseña del usuario."),
+ * @OA\Property(property="dni", type="string", description="DNI del usuario."),
+ * @OA\Property(property="phone", type="string", description="Teléfono del usuario."),
+ * @OA\Property(property="address", type="string", description="Dirección del usuario."),
+ * @OA\Property(property="type", type="string", description="Tipo de usuario (oper).")
+ * )
  */
 class StoreOperUserRequest extends FormRequest
 {
