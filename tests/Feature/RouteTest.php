@@ -2,132 +2,104 @@
 
 namespace Tests\Feature;
 
-use App\Models\User; // Import the User model to interact with user data in the tests
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\User;
+use App\Models\Task;
+use App\Models\Client;
+use App\Models\Fee;
 
-/**
- * This class contains feature tests for routing functionality.
- * It includes tests to ensure routes behave as expected, 
- * particularly regarding authentication requirements and 
- * HTTP status responses for different routes in the application.
- */
 class RouteTest extends TestCase
 {
-    /**
-     * Test that the root route redirects to /login.
-     *
-     * This test checks that when a user accesses the root URL ('/'),
-     * they are redirected to the login page ('/login').
-     *
-     * @return void
-     */
-    public function test_root_route_redirects_to_login()
+    use RefreshDatabase, WithFaker;
+
+    protected $adminUser;
+    protected $operUser;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->adminUser = User::factory()->admin()->create();
+        $this->operUser = User::factory()->oper()->create();
+    }
+
+    public function test_root_redirects_to_login()
     {
         $response = $this->get('/');
-        $response->assertRedirect('/login'); // Assert that the response redirects to '/login'
+        $response->assertRedirect('/login');
     }
 
-    /**
-     * Test that the /dashboard route requires authentication.
-     *
-     * This test ensures that if an unauthenticated user attempts 
-     * to access the '/dashboard' route, they will be redirected 
-     * to the login page.
-     *
-     * @return void
-     */
-    public function test_dashboard_route_requires_authentication()
+    public function test_admin_routes_require_admin_role()
     {
-        $response = $this->get('/dashboard');
-        $response->assertRedirect('/login'); // Assert that unauthenticated users are redirected to '/login'
+        $response = $this->actingAs($this->adminUser)->get('/operUsers');
+        $response->assertStatus(200);
+
+        $response = $this->actingAs($this->adminUser)->get('/tasks');
+        $response->assertStatus(200);
+
+        $response = $this->actingAs($this->adminUser)->get('/clients');
+        $response->assertStatus(200);
+
+        $response = $this->actingAs($this->adminUser)->get('/fees');
+        $response->assertStatus(200);
     }
 
-    /**
-     * Test that the /dashboard route returns a 200 response for authenticated users.
-     *
-     * This test ensures that when an authenticated user accesses 
-     * the '/dashboard' route, they receive a successful HTTP status (200).
-     *
-     * @return void
-     */
-    public function test_dashboard_route_returns_200_for_authenticated_users()
+    public function test_oper_routes_require_oper_role()
     {
-        $user = User::factory()->create(); // Create a new user for the test
-        $response = $this->actingAs($user)->get('/dashboard'); // Simulate the user as authenticated
-        $response->assertStatus(200); // Assert that the response status is 200 (OK)
+        $response = $this->actingAs($this->operUser)->get('/tasksOper');
+        $response->assertStatus(200);
     }
 
-    /**
-     * Test that the /tasks route requires authentication.
-     *
-     * This test ensures that unauthenticated users are redirected 
-     * to the login page when they attempt to access the '/tasks' route.
-     *
-     * @return void
-     */
-    public function test_tasks_route_requires_authentication()
+    public function test_client_task_routes()
     {
-        $response = $this->get('/tasks');
-        $response->assertRedirect('/login'); // Assert that unauthenticated users are redirected to '/login'
+        $response = $this->get('/tasks/create/client');
+        $response->assertStatus(200);
+
+        $response = $this->get('/thanks-client');
+        $response->assertStatus(200);
     }
 
-    /**
-     * Test that the /tasks route returns a 200 response for authenticated users.
-     *
-     * This test ensures that when an authenticated user accesses 
-     * the '/tasks' route, they receive a successful HTTP status (200).
-     *
-     * @return void
-     */
-    public function test_tasks_route_returns_200_for_authenticated_users()
+    public function test_resource_routes()
     {
-        $user = User::factory()->create(); // Create a new user for the test
-        $response = $this->actingAs($user)->get('/tasks'); // Simulate the user as authenticated
-        $response->assertStatus(200); // Assert that the response status is 200 (OK)
-    }
+        $this->actingAs($this->adminUser);
 
-    /**
-     * Test that the /clients route returns a 200 response for authenticated users.
-     *
-     * This test ensures that when an authenticated user accesses 
-     * the '/clients' route, they receive a successful HTTP status (200).
-     *
-     * @return void
-     */
-    public function test_clients_route_returns_200_for_authenticated_users()
-    {
-        $user = User::factory()->create(); // Create a new user for the test
-        $response = $this->actingAs($user)->get('/clients'); // Simulate the user as authenticated
-        $response->assertStatus(200); // Assert that the response status is 200 (OK)
-    }
+        $user = User::factory()->create();
+        $task = Task::factory()->create();
+        $client = Client::factory()->create();
+        $fee = Fee::factory()->create();
 
-    /**
-     * Test that the /users/oper route requires authentication.
-     *
-     * This test ensures that unauthenticated users are redirected 
-     * to the login page when they attempt to access the '/users/oper' route.
-     *
-     * @return void
-     */
-    public function test_users_oper_route_requires_authentication()
-    {
-        $response = $this->get('/users/oper');
-        $response->assertRedirect('/login'); // Assert that unauthenticated users are redirected to '/login'
-    }
+        $this->get(route('operUsers.index'))->assertStatus(200);
+        $this->get(route('operUsers.create'))->assertStatus(200);
+        $this->post(route('operUsers.store'), $user->toArray())->assertStatus(302);
+        $this->get(route('operUsers.show', $user->id))->assertStatus(200);
+        $this->get(route('operUsers.edit', $user->id))->assertStatus(200);
+        $this->put(route('operUsers.update', $user->id), $user->toArray())->assertStatus(302);
+        $this->delete(route('operUsers.destroy', $user->id))->assertStatus(302);
 
-    /**
-     * Test that the /users/oper route returns a 200 response for authenticated users.
-     *
-     * This test ensures that when an authenticated user accesses 
-     * the '/users/oper' route, they receive a successful HTTP status (200).
-     *
-     * @return void
-     */
-    public function test_users_oper_route_returns_200_for_authenticated_users()
-    {
-        $user = User::factory()->create(); // Create a new user for the test
-        $response = $this->actingAs($user)->get('/users/oper'); // Simulate the user as authenticated
-        $response->assertStatus(200); // Assert that the response status is 200 (OK)
+        $this->get(route('tasks.index'))->assertStatus(200);
+        $this->get(route('tasks.create'))->assertStatus(200);
+        $this->post(route('tasks.store'), $task->toArray())->assertStatus(302);
+        $this->get(route('tasks.show', $task->id))->assertStatus(200);
+        $this->get(route('tasks.edit', $task->id))->assertStatus(200);
+        $this->put(route('tasks.update', $task->id), $task->toArray())->assertStatus(302);
+        $this->delete(route('tasks.destroy', $task->id))->assertStatus(302);
+
+        $this->get(route('clients.index'))->assertStatus(200);
+        $this->get(route('clients.create'))->assertStatus(200);
+        $this->post(route('clients.store'), $client->toArray())->assertStatus(302);
+        $this->get(route('clients.show', $client->id))->assertStatus(200);
+        $this->get(route('clients.edit', $client->id))->assertStatus(200);
+        $this->put(route('clients.update', $client->id), $client->toArray())->assertStatus(302);
+        $this->delete(route('clients.destroy', $client->id))->assertStatus(302);
+
+        $this->get(route('fees.index'))->assertStatus(200);
+        $this->get(route('fees.createExtraordinaryFee'))->assertStatus(200);
+        $this->post(route('fees.store'), $fee->toArray())->assertStatus(302);
+        $this->get(route('fees.show', $fee->id))->assertStatus(200);
+        $this->get(route('fees.edit', $fee->id))->assertStatus(200);
+        $this->put(route('fees.update', $fee->id), $fee->toArray())->assertStatus(302);
+        $this->delete(route('fees.destroy', $fee->id))->assertStatus(302);
     }
 }

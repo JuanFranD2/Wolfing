@@ -227,6 +227,8 @@ class FeeController extends Controller
             'notes' => $request->notes,
         ]);
 
+        $fee->load('client');
+
         // Generar un nuevo PDF con los datos actualizados
         $this->sendFeeInvoice($fee);
 
