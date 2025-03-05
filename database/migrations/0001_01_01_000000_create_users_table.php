@@ -22,15 +22,20 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id(); // Auto-incremental ID field
             $table->string('name'); // User's name
-            $table->string('email')->unique(); // Unique email field
+            $table->string('email')->unique()->nullable(); // Unique email field, nullable for google users.
             $table->timestamp('email_verified_at')->nullable(); // Email verification timestamp
-            $table->string('password'); // User's password
-            $table->string('dni')->unique(); // Unique DNI (Documento Nacional de Identidad) field
+            $table->string('password')->nullable(); // User's password, nullable for google users.
+            $table->string('dni')->unique()->nullable(); // Unique DNI (Documento Nacional de Identidad) field, nullable for google users.
             $table->string('phone')->nullable(); // Phone number (nullable)
             $table->text('address')->nullable(); // User's address (nullable)
             $table->enum('type', ['admin', 'oper'])->default('oper'); // User type (default is 'oper')
             $table->rememberToken(); // Remember token for the user
             $table->timestamps(); // Created at and updated at timestamps
+
+            // Google specific fields
+            $table->string('google_id')->nullable()->unique();
+            $table->text('google_token')->nullable();
+            $table->text('google_refresh_token')->nullable();
         });
 
         // Create the 'password_reset_tokens' table

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FeeController;
+use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\OperUserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
@@ -97,5 +98,8 @@ Route::get('/thanks-client', function () {
 })->name('tasks.thanks.client');
 
 Route::resource('provinces', ProvinceController::class);
+
+Route::get('/login/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+Route::get('/login/google', [GoogleController::class, 'redirectToGoogle'])->name('login.google');
 
 require __DIR__ . '/auth.php';
