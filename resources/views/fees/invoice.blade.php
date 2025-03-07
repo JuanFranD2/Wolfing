@@ -124,6 +124,12 @@
                     <th>Amount</th>
                     <td>{{ $fee->amount }} €</td>
                 </tr>
+                @if (isset($convertedAmount) && isset($currency))
+                    <tr>
+                        <th>Converted Amount</th>
+                        <td>{{ $convertedAmount }} {{ $currency }}</td>
+                    </tr>
+                @endif
                 <tr>
                     <th>Issue Date</th>
                     <td>{{ \Carbon\Carbon::parse($fee->issue_date)->format('Y-m-d') }}</td>
@@ -135,7 +141,7 @@
             </table>
 
             <div class="total">
-                <p>Total: {{ $fee->amount }} €</p>
+                <p>Total: {{ isset($convertedAmount) ? $convertedAmount . ' ' . $currency : $fee->amount . ' €' }}</p>
             </div>
         </div>
 

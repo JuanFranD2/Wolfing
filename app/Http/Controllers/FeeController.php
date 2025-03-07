@@ -105,7 +105,32 @@ class FeeController extends Controller
         return redirect()->route('fees.index')->with('success', 'Extraordinary fee created successfully.');
     }
 
+    public function convertCurrency($amount, $destinationCurrency)
+    {
+        $url = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/eur.json";
+
+        try {
+            $json = file_get_contents($url);
+            $data = json_decode($json, true); // Convert JSON to associative array
+
+            if (!isset($data['eur'][$destinationCurrency])) {
+                throw new \Exception("Error: Currency not found.");
+            }
+
+            $rate = $data['eur'][$destinationCurrency];
+            $convertedAmount = $amount * $rate;
+
+            return number_format($convertedAmount, 2, '.', '');
+        } catch (\Exception $e) {
+            // Log error or handle it as needed
+            return false;
+        }
+    }
+
+
     /**
+     * Envía la factura de una cuota por correo electrónico.
+     *
      * @OA\Post(
      * path="/fees/{id}/send-invoice",
      * summary="Envía la factura de una cuota por correo electrónico",
@@ -117,18 +142,39 @@ class FeeController extends Controller
      * description="ID de la cuota.",
      * @OA\Schema(type="integer")
      * ),
+     * @OA\Parameter(
+     * name="currency",
+     * in="query",
+     * description="Moneda a la que se desea convertir el monto.",
+     * @OA\Schema(type="string")
+     * ),
      * @OA\Response(
      * response=200,
      * description="Factura enviada correctamente."
      * )
      * )
      */
-    public function sendFeeInvoice(Fee $fee)
+    public function sendFeeInvoice(Fee $fee, $currency = null)
     {
         $client = $fee->client; // Obtener cliente de la fee
-        $pdf = Pdf::loadView('fees.invoice', compact('fee'))->setPaper('a4', 'portrait');
 
-        $pdfPath = 'fee_invoices/invoice_' . $fee->id . '.pdf';
+        // Determinar la moneda del cliente si no se proporciona
+        $currency = $currency ?? $client->currency ?? 'eur';
+
+        // Convertir el monto a la moneda deseada
+        $convertedAmount = $this->convertCurrency($fee->amount, $currency);
+        if ($convertedAmount === false) {
+            return response()->json(['error' => 'Currency conversion failed.'], 400);
+        }
+
+        $pdf = Pdf::loadView('fees.invoice', [
+            'fee' => $fee,
+            'convertedAmount' => $convertedAmount,
+            'currency' => strtoupper($currency),
+            'originalAmount' => $fee->amount
+        ])->setPaper('a4', 'portrait');
+
+        $pdfPath = 'fee_invoices/invoice_' . $fee->id . '_' . $currency . '.pdf';
 
         // Guardar el PDF en el almacenamiento público
         Storage::disk('public')->put($pdfPath, $pdf->output());
@@ -137,7 +183,7 @@ class FeeController extends Controller
         $pathToFile = storage_path('app/public/' . $pdfPath);
 
         // Enviar el correo con el PDF adjunto
-        Mail::to($client->email)->send(new FeeInvoiceMail($fee, $pathToFile));
+        Mail::to($client->email)->send(new FeeInvoiceMail($fee, $pathToFile, $convertedAmount, $currency));
 
         return response()->json(['message' => 'Invoice sent successfully'], 200);
     }

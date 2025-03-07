@@ -40,7 +40,7 @@ return new class extends Migration
             $table->string('country')->nullable(); // Country of the client (nullable)
 
             // Moneda
-            $table->string('currency')->default('EUR'); // Currency used by the client (default is EUR)
+            $table->string('currency')->default('eur'); // Currency used by the client (default is EUR)
 
             // Importe cuota mensual
             $table->decimal('monthly_fee', 10, 2)->default(0.00); // Monthly fee (default is 0.00)

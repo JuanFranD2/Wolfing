@@ -5,34 +5,28 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Fee; // Importa el modelo Fee
+use App\Models\Fee;
 use Illuminate\Support\Facades\Log;
 
-/**
- * Mailable class to send a fee invoice email.
- *
- * This class is responsible for creating the email message with the fee details
- * and attaching the corresponding PDF invoice. It performs basic validation 
- * to ensure the fee and client email are valid.
- */
 class FeeInvoiceMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $fee;
     public $pdfPath;
+    public $convertedAmount;
+    public $currency;
 
     /**
      * Create a new message instance.
      *
-     * This method initializes the FeeInvoiceMail instance with a given Fee and PDF file path.
-     * It checks if the Fee object and its associated client email are valid. If not, it logs an error.
-     *
      * @param  \App\Models\Fee  $fee
      * @param  string  $pdfPath
+     * @param  float  $convertedAmount
+     * @param  string  $currency
      * @throws \Exception
      */
-    public function __construct(Fee $fee, $pdfPath)
+    public function __construct(Fee $fee, $pdfPath, $convertedAmount = null, $currency = 'EUR')
     {
         if (!$fee) {
             Log::error("Error: \$fee es null en FeeInvoiceMail.");
@@ -46,14 +40,12 @@ class FeeInvoiceMail extends Mailable
 
         $this->fee = $fee;
         $this->pdfPath = $pdfPath;
+        $this->convertedAmount = $convertedAmount;
+        $this->currency = $currency;
     }
 
     /**
      * Build the message.
-     *
-     * This method constructs the email message, sets the subject, the view to render,
-     * and attaches the generated PDF invoice to the email. The attachment is named
-     * based on the fee ID and is set to the PDF MIME type.
      *
      * @return \Illuminate\Mail\Mailable
      */
@@ -61,6 +53,10 @@ class FeeInvoiceMail extends Mailable
     {
         return $this->subject('Your Fee Invoice - ' . $this->fee->id)
             ->view('emails.fee_invoice')
+            ->with([
+                'convertedAmount' => $this->convertedAmount,
+                'currency' => $this->currency
+            ])
             ->attach($this->pdfPath, [
                 'as' => 'invoice_' . $this->fee->id . '.pdf',
                 'mime' => 'application/pdf',
