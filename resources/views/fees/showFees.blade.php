@@ -75,7 +75,8 @@
                                                     Client not found
                                                 @endif
                                             </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-white">{{ $fee->concept }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-white">
+                                                {{ Str::limit($fee->concept, 20) }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap text-white">{{ $fee->amount }} €
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-white">

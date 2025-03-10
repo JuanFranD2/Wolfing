@@ -15,12 +15,12 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.index')">
-                        {{ __('Tasks') }}
-                    </x-nav-link>
 
                     <!-- Mostrar solo si el usuario es un administrador -->
-                    @if (Auth::user()->type !== 'oper')
+                    @if (Auth::user()->type === 'admin')
+                        <x-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.index')">
+                            {{ __('Tasks') }}
+                        </x-nav-link>
                         <x-nav-link :href="route('clients.index')" :active="request()->routeIs('clients.index')">
                             {{ __('Clients') }}
                         </x-nav-link>
@@ -29,6 +29,10 @@
                         </x-nav-link>
                         <x-nav-link :href="route('fees.index')" :active="request()->routeIs('fees.index')">
                             {{ __('Fees') }}
+                        </x-nav-link>
+                    @elseif (Auth::user()->type === 'oper')
+                        <x-nav-link :href="route('tasksOper.index')" :active="request()->routeIs('tasksOper.index')">
+                            {{ __('My Tasks') }}
                         </x-nav-link>
                     @endif
                 </div>

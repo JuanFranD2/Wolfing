@@ -240,7 +240,7 @@ class TaskController extends Controller
         $task->save();
 
         // Redirigir de vuelta a la lista de tareas con un mensaje de éxito
-        return redirect()->route('tasks.index')->with('success', 'Task completed successfully.');
+        return redirect()->route('tasksOper.index')->with('success', 'Task completed successfully.');
     }
 
     /**

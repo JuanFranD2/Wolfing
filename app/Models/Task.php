@@ -73,4 +73,30 @@ class Task extends Model
     {
         return $value ? \Carbon\Carbon::parse($value)->format('Y-m-d H:i:s') : 'No realization date';
     }
+
+    // En tu modelo Task
+    public function getStatusClassAttribute()
+    {
+        return match ($this->status) {
+            'P' => 'bg-yellow-500 text-white px-3 py-1 rounded-full text-sm flex items-center justify-center',
+            'E' => 'bg-blue-500 text-white px-3 py-1 rounded-full text-sm flex items-center justify-center',
+            'R' => 'bg-green-500 text-white px-3 py-1 rounded-full text-sm flex items-center justify-center',
+            'C' => 'bg-purple-500 text-white px-3 py-1 rounded-full text-sm flex items-center justify-center',
+            'X' => 'bg-red-500 text-white px-3 py-1 rounded-full text-sm flex items-center justify-center',
+            default => 'bg-gray-500 text-white px-3 py-1 rounded-full text-sm flex items-center justify-center'
+        };
+    }
+
+
+    public function getStatusDescriptionAttribute()
+    {
+        return match ($this->status) {
+            'P' => 'Pending Approval',
+            'E' => 'In Progress',
+            'R' => 'Completed',
+            'C' => 'Under Review',
+            'X' => 'Cancelled',
+            default => 'Unknown'
+        };
+    }
 }
