@@ -13,18 +13,27 @@
 
                     <!-- Row 1: Client, Contact Person, Contact Email, Contact Phone -->
                     <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 mb-2">
+                        <input type="hidden" name="status" id="status "value="E">
+                        <!-- Client Select Field -->
                         <div>
-                            <input type="hidden" name="status" id="status "value="E">
                             <label for="client" class="block text-gray-700 dark:text-gray-200">Client</label>
-                            <input type="text" name="client" id="client"
-                                class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                                value="{{ old('client') }}">
+                            <select name="client" id="client"
+                                class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                <option value="">Select a Client</option>
+                                @foreach ($clients as $client)
+                                    <option value="{{ $client->name }}"
+                                        {{ old('client') == $client->name ? 'selected' : '' }}>
+                                        {{ $client->name }}
+                                    </option>
+                                @endforeach
+                            </select>
                             <div class='h5'>
                                 @error('client')
                                     <span class="text-red-500 text-sm">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
+
                         <div>
                             <label for="contact_person" class="block text-gray-700 dark:text-gray-200">Contact
                                 Person</label>

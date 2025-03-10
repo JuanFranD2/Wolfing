@@ -240,7 +240,7 @@ class TaskController extends Controller
         $task->save();
 
         // Redirigir de vuelta a la lista de tareas con un mensaje de éxito
-        return redirect()->route('tasks.index')->with('success', 'Task completed successfully.');
+        return redirect()->route('tasksOper.index')->with('success', 'Task completed successfully.');
     }
 
     /**
@@ -260,8 +260,9 @@ class TaskController extends Controller
     {
         $provinces = Province::all();
         $operators = User::where('type', 'oper')->get(['id', 'name']);
+        $clients = Client::all();
 
-        return view('tasks.newTaskAdmin', compact('provinces', 'operators'));
+        return view('tasks.newTaskAdmin', compact('provinces', 'operators', 'clients'));
     }
 
     /**
@@ -411,7 +412,7 @@ class TaskController extends Controller
 
         return redirect()->route('tasks.index')->with('success', 'Task updated successfully.');
     }
-    
+
     /**
      * Almacenar una nueva tarea para el cliente.
      *

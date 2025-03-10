@@ -84,7 +84,7 @@ Route::middleware(['auth', 'oper'])->group(function () {
     Route::put('/tasks/{id}/complete', [TaskController::class, 'completeTask'])->name('tasks.completeTask');
 
     // Ruta para mostrar todas las tareas
-    Route::get('/tasksOper', [TaskController::class, 'index'])->name('tasksOper.index');
+    Route::get('/tasksOpers', [TaskController::class, 'index'])->name('tasksOper.index');
 });
 
 // Ruta para acceder a la creación de una nueva tarea para un cliente

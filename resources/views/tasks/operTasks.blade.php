@@ -47,7 +47,12 @@
                                                 {{ $task->contact_person }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap text-white">
                                                 {{ $task->contact_phone }}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-white">{{ $task->status }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-center text-white">
+                                                <div
+                                                    class="{{ $task->status == 'E' ? 'bg-yellow-500' : 'bg-gray-500' }} text-white px-2 py-1 rounded text-center">
+                                                    {{ $task->status_description }}
+                                                </div>
+                                            </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-white">
                                                 {{ $task->created_at->format('Y-m-d H:i') }}</td>
                                             <td
