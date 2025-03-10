@@ -1,8 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Fee Details') }} #{{ $fee->id }}
-        </h2>
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Fee Details') }} #{{ $fee->id }}
+            </h2>
+            <button onclick="window.history.back()" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+                Back
+            </button>
+        </div>
     </x-slot>
 
     <div class="py-4">
@@ -62,12 +67,31 @@
                         </tbody>
                     </table>
 
-                    <div class="mt-4">
-                        <button onclick="window.history.back()"
-                            class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
-                            Back
-                        </button>
-                    </div>
+                    <!-- PayPal SDK -->
+                    <div id="paypal-button-container" class="w-full mt-4"></div>
+
+                    <script
+                        src="https://www.paypal.com/sdk/js?client-id=AUqmdgiYrcZO39Nkr5nMV0Bq0aXtvTEbBQjJtGOApe5QEfUtiBL97U5oBVO2viMWBnHDirLmlDcLVkoi">
+                    </script>
+                    <script>
+                        paypal.Buttons({
+                            createOrder: function(data, actions) {
+                                return actions.order.create({
+                                    purchase_units: [{
+                                        amount: {
+                                            value: '{{ $fee->amount }}'
+                                        }
+                                    }]
+                                });
+                            },
+                            onApprove: function(data, actions) {
+                                return actions.order.capture().then(function(details) {
+                                    alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                                });
+                            }
+                        }).render('#paypal-button-container');
+                    </script>
+
                 </div>
             </div>
         </div>
