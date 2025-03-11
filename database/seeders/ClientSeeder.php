@@ -35,7 +35,7 @@ class ClientSeeder extends Seeder
             'email' => 'johndoe@example.com', // Client's email address
             'bank_account' => 'ES9121000418450200051332', // Client's bank account number
             'country' => 'Spain', // Client's country
-            'currency' => 'EUR', // Client's currency
+            'currency' => 'usd', // Client's currency
             'monthly_fee' => 0, // Monthly fee for the client (0 for free)
         ]);
 
@@ -46,7 +46,7 @@ class ClientSeeder extends Seeder
             'email' => 'janesmith@example.com', // Client's email address
             'bank_account' => 'ES9121000418450200051333', // Client's bank account number
             'country' => 'France', // Client's country
-            'currency' => 'EUR', // Client's currency
+            'currency' => 'azn', // Client's currency
             'monthly_fee' => 100, // Monthly fee for the client
         ]);
 
